@@ -107,8 +107,7 @@
     .ans-explanation .right-def { color: #6ee7b7; font-weight: 600; }
     .ans-explanation .ok-def    { color: #a5b4fc; font-weight: 600; }
     .ans-explanation hr {
-      border: none; border-top: 1px solid rgba(255,255,255,0.08);
-      margin: 0.5rem 0;
+      border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0.5rem 0;
     }
     .hint { margin-top: 1rem; font-size: 0.82rem; color: #475569; text-align: center; }
     @keyframes shake {
@@ -179,294 +178,232 @@
   </div>
 
   <script>
-  // ─── DEFINITIONS REFERENCE (from the official list) ───────────────────────
-  // library    = place to BORROW books free        ↔ bookstore = place to BUY books
-  // crayon     = waxy colouring stick (children)   ↔ pencil    = writing instrument w/ lead
-  // phrase     = group of words, no full thought   ↔ sentence  = complete thought + period
-  // note       = written message / musical symbol  ↔ mark      = school evaluation number
-  // professor  = highest academic rank faculty     ↔ teacher   = one whose job is to instruct
-  // conductor  = someone who drives a TRAIN        ↔ driver    = car/bus/taxi operator
-  // mechanic   = person who repairs engines        ↔ machinery = assemblage of machine parts
-  // comedian   = someone who PORTRAYS a character  ↔ actor     = someone who tells jokes
-  // demand(v)  = request forcefully                ↔ ask       = pose a question politely
-  // command(v) = tell someone officially to do sth ↔ order(v)  = request food/goods from business
-  // cry        = shed tears (sad)                  ↔ scream    = raise volume of voice
-  // rest       = stop for a break                  ↔ stay      = live in a place
-  // vacancy    = empty space in a building         ↔ vacation  = period of travel/recreation
-  // temperature= degree of heat/cold on scale      ↔ weather   = state of atmosphere
-  // cave       = hole in the earth                 ↔ basement  = part of house below ground
-  // medicine   = substance used to treat disease   ↔ doctor    = person who helps sick people
-  // photograph = a picture                         ↔ photographer = person who takes pictures
-  // furniture  = items in rooms (couch, chair…)   ↔ supplies  = items needed in office/kitchen
-  // piece      = stage representation of a story   ↔ play      = a part of a whole / fragment
-  // infant     = baby or very young person         ↔ child     = young person, not baby/teen
-  // parent     = mother or father only             ↔ relative  = anyone in family
-  // figure     = shape/form of body                ↔ face      = head part w/ eyes/nose/mouth
-  // gentle     = soft or delicate                  ↔ nice      = polite or kind
-  // sensible   = good judgment / wise              ↔ sensitive = emotionally delicate
-  // fine(adj)  = very well / all right             ↔ kind(adj) = of a helpful nature
-  // severe     = intense / violent                 ↔ strict    = rigid / disciplinary
-  // sympathetic= sensitive to others' emotions     ↔ nice      = pleasing / agreeable
-  // actually   = in fact                           ↔ currently = at this moment / right now
-
-  const items = [
-    {
-      // phrase❌ → sentence✅ | professor✅(highest rank faculty) | library✅(borrow free)
-      sentence: "My professor told me to write a phrase explaining what makes a library different from a bookstore.",
-      falseWord: "phrase", correctWord: "sentence",
-      otherTwo: ["professor", "library"],
-      correctedSentence: "My professor told me to write a sentence explaining what makes a library different from a bookstore.",
-      explanation: `<span class='wrong-def'>"Phrase"</span> = a group of words without a subject+verb — not a complete thought. A complete thought ending with a period is a <span class='right-def'>"sentence"</span>.<hr><span class='ok-def'>"Professor"</span> is correctly used here: a professor is a faculty member of the highest academic rank who assigns written work. ✓<br><span class='ok-def'>"Library"</span> is correctly used here: it is a place where you borrow books for free with a membership card — contrasted here with a bookstore where you buy them. ✓`
-    },
-    {
-      // temperature❌ → weather✅ | conductor✅(drives train) | stay✅(lives in place)
-      sentence: "The conductor asked his relative to stay home because the temperature outside was dangerous.",
-      falseWord: "temperature", correctWord: "weather",
-      otherTwo: ["conductor", "stay"],
-      correctedSentence: "The conductor asked his relative to stay home because the weather outside was dangerous.",
-      explanation: `<span class='wrong-def'>"Temperature"</span> = only a degree of heat or cold measured on a scale (e.g. 30°C). When describing rain, wind or stormy conditions, the correct word is <span class='right-def'>"weather"</span>.<hr><span class='ok-def'>"Conductor"</span> is correctly used here: a conductor drives or operates a train. ✓<br><span class='ok-def'>"Stay"</span> is correctly used here: to stay home means to remain and live in a place. ✓`
-    },
-    {
-      // crayon❌ → pencil✅ | photographer✅(person who takes pictures) | supplies✅(office/work items)
-      sentence: "The photographer used a crayon to label her supplies before the shoot.",
-      falseWord: "crayon", correctWord: "pencil",
-      otherTwo: ["photographer", "supplies"],
-      correctedSentence: "The photographer used a pencil to label her supplies before the shoot.",
-      explanation: `<span class='wrong-def'>"Crayon"</span> = a waxy colouring stick used by children to draw — not a writing instrument. To write or label something you need a <span class='right-def'>"pencil"</span>, which has a graphite tip.<hr><span class='ok-def'>"Photographer"</span> is correctly used here: a photographer is the person who takes pictures. ✓<br><span class='ok-def'>"Supplies"</span> is correctly used here: supplies are provisions and items needed for work. ✓`
-    },
-    {
-      // library❌ → bookstore✅ | relative✅(anyone in family) | furniture✅(home items)
-      sentence: "My relative bought all his furniture at the library across the street.",
-      falseWord: "library", correctWord: "bookstore",
-      otherTwo: ["relative", "furniture"],
-      correctedSentence: "My relative bought all his furniture at the bookstore across the street.",
-      explanation: `<span class='wrong-def'>"Library"</span> = a place where you borrow books for free — you cannot buy anything there. A store where you purchase books and supplies is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> is correctly used here: a relative means anyone in your family (aunt, uncle, cousin, etc.). ✓<br><span class='ok-def'>"Furniture"</span> is correctly used here: furniture refers to items found in rooms at home such as couches, chairs, and tables. ✓`
-    },
-    {
-      // cry❌ → scream✅ | comedian✅(portrays a character) | piece✅(stage representation of a story)
-      sentence: "The comedian forgot his lines and began to cry at the director during the piece.",
-      falseWord: "cry", correctWord: "scream",
-      otherTwo: ["comedian", "piece"],
-      correctedSentence: "The comedian forgot his lines and began to scream at the director during the piece.",
-      explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise the volume of your voice loudly at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> is correctly used here: in English, a comedian is someone who portrays a character in a production — i.e. an actor in a play. ✓<br><span class='ok-def'>"Piece"</span> is correctly used here: a piece is the stage representation of an action or story — a theatrical work. ✓`
-    },
-    {
-      // figure❌ → face✅ | comedian✅(portrays character) | doctor✅(person who helps sick)
-      sentence: "The comedian needed a doctor because he hurt his figure during rehearsal.",
-      falseWord: "figure", correctWord: "face",
-      otherTwo: ["comedian", "doctor"],
-      correctedSentence: "The comedian needed a doctor because he hurt his face during rehearsal.",
-      explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of a person's entire body. The part of the head that includes the eyes, nose and mouth is the <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Comedian"</span> is correctly used here: a comedian is someone who portrays a character in a production. ✓<br><span class='ok-def'>"Doctor"</span> is correctly used here: a doctor is the person who helps sick or injured people. ✓`
-    },
-    {
-      // fine❌ → kind✅ | professor✅(highest rank faculty) | severe✅(intense/violent)
-      sentence: "My professor is very fine — she never gives severe punishments to her students.",
-      falseWord: "fine", correctWord: "kind",
-      otherTwo: ["professor", "severe"],
-      correctedSentence: "My professor is very kind — she never gives severe punishments to her students.",
-      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine, thank you"). To describe someone who is helpful and caring by nature, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> is correctly used here: a professor is a faculty member of the highest academic rank at a university. ✓<br><span class='ok-def'>"Severe"</span> is correctly used here: severe means intense or violent — a severe punishment is an extreme one. ✓`
-    },
-    {
-      // vacancy❌ → vacation✅ | infant✅(baby/very young) | basement✅(below ground house level)
-      sentence: "During the vacancy, the infant stayed in the basement with his parents every evening.",
-      falseWord: "vacancy", correctWord: "vacation",
-      otherTwo: ["infant", "basement"],
-      correctedSentence: "During the vacation, the infant stayed in the basement with his parents every evening.",
-      explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an available position (e.g. a job vacancy). A period spent away from home for travel and recreation is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Infant"</span> is correctly used here: an infant is a baby or very young person. ✓<br><span class='ok-def'>"Basement"</span> is correctly used here: a basement is the part of a house below ground level. ✓`
-    },
-    {
-      // sensible❌ → sensitive✅ | strict✅(rigid/disciplinary) | mark✅(school evaluation)
-      sentence: "The sensible child began to cry when the strict teacher gave her a low mark.",
-      falseWord: "sensible", correctWord: "sensitive",
-      otherTwo: ["strict", "mark"],
-      correctedSentence: "The sensitive child began to cry when the strict teacher gave her a low mark.",
-      explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and being wise. A child who cries easily because she is emotionally delicate is <span class='right-def'>"sensitive"</span>.<hr><span class='ok-def'>"Strict"</span> is correctly used here: a strict teacher is one who is rigid and disciplinary. ✓<br><span class='ok-def'>"Mark"</span> is correctly used here: a mark is a number showing the evaluation of school work. ✓`
-    },
-    {
-      // cave❌ → basement✅ | comedian✅(portrays character) | actually✅(in fact)
-      sentence: "My relative is a comedian who actually stays in a cave when he travels for shows.",
-      falseWord: "cave", correctWord: "basement",
-      otherTwo: ["comedian", "actually"],
-      correctedSentence: "My relative is a comedian who actually stays in a basement when he travels for shows.",
-      explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth, possibly home to bears or bats — not part of a building. The underground floor of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Comedian"</span> is correctly used here: a comedian portrays a character in a production — he performs in shows. ✓<br><span class='ok-def'>"Actually"</span> is correctly used here: actually means "in fact", used here to emphasize a surprising truth. ✓`
-    },
-    {
-      // demand❌ → ask✅ | conductor✅(drives train) | driver✅(drives car/bus)
-      sentence: "She demanded the conductor why the driver was going so fast.",
-      falseWord: "demanded", correctWord: "asked",
-      otherTwo: ["conductor", "driver"],
-      correctedSentence: "She asked the conductor why the driver was going so fast.",
-      explanation: `<span class='wrong-def'>"Demand"</span> = to request something in a serious, forceful manner — it does not mean to ask a question. To pose a question politely, the correct word is <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Conductor"</span> is correctly used here: a conductor is someone who drives or operates a train. ✓<br><span class='ok-def'>"Driver"</span> is correctly used here: a driver is someone who drives a car, bus or taxi. ✓`
-    },
-    {
-      // rest❌ → stay✅ | doctor✅(person who helps sick) | medicine✅(substance to treat disease)
-      sentence: "The doctor told the infant to rest at home and take his medicine twice a day.",
-      falseWord: "rest", correctWord: "stay",
-      otherTwo: ["doctor", "medicine"],
-      correctedSentence: "The doctor told the infant to stay at home and take his medicine twice a day.",
-      explanation: `<span class='wrong-def'>"Rest"</span> = stopping for a moment to take a break. To remain and live in a place, the correct word is <span class='right-def'>"stay"</span> (e.g. stay at home, stay in a hotel).<hr><span class='ok-def'>"Doctor"</span> is correctly used here: a doctor is the person who helps sick people and prescribes medicine. ✓<br><span class='ok-def'>"Medicine"</span> is correctly used here: medicine is a substance or preparation used in treating disease. ✓`
-    },
-    {
-      // mechanics❌ → machinery✅ | relative✅(anyone in family) | currently✅(at this moment)
-      sentence: "My relative works with dangerous mechanics in a factory and is currently looking for a new job.",
-      falseWord: "mechanics", correctWord: "machinery",
-      otherTwo: ["relative", "currently"],
-      correctedSentence: "My relative works with dangerous machinery in a factory and is currently looking for a new job.",
-      explanation: `<span class='wrong-def'>"Mechanic"</span> = a person who repairs engines — it refers to a human worker, not equipment. The dangerous machines and equipment in a factory are called <span class='right-def'>"machinery"</span>.<hr><span class='ok-def'>"Relative"</span> is correctly used here: a relative means anyone in your family. ✓<br><span class='ok-def'>"Currently"</span> is correctly used here: currently means at this moment, right now. ✓`
-    },
-    {
-      // photograph❌ → photographer✅ | note✅(written message) | vacation✅(travel/recreation)
-      sentence: "The photograph left a note for his clients before leaving for vacation.",
-      falseWord: "photograph", correctWord: "photographer",
-      otherTwo: ["note", "vacation"],
-      correctedSentence: "The photographer left a note for his clients before leaving for vacation.",
-      explanation: `<span class='wrong-def'>"Photograph"</span> = a picture — it is an object, not a person. The person who takes pictures professionally is a <span class='right-def'>"photographer"</span>.<hr><span class='ok-def'>"Note"</span> is correctly used here: a note is a written message or record of information left for someone. ✓<br><span class='ok-def'>"Vacation"</span> is correctly used here: a vacation is a period spent away from home or business for travel or recreation. ✓`
-    },
-    {
-      // sympathetic❌ → nice✅ | mark✅(school evaluation) | stay✅(living in a place)
-      sentence: "She is a sympathetic teacher who gives good marks and stays after class to help.",
-      falseWord: "sympathetic", correctWord: "nice",
-      otherTwo: ["marks", "stay"],
-      correctedSentence: "She is a nice teacher who gives good marks and stays after class to help.",
-      explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — it does not mean pleasant or agreeable. A teacher who is pleasant, helpful and likeable is described as <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Marks"</span> is correctly used here: marks are numbers showing the evaluation of school work. ✓<br><span class='ok-def'>"Stays"</span> is correctly used here: to stay means to remain in a place — she remains after class. ✓`
-    },
-    {
-      // gentle❌ → nice✅ | comedian✅(portrays character) | sympathetic✅(sensitive to others' emotions)
-      sentence: "The comedian was sympathetic and always gentle with children in the audience.",
-      falseWord: "gentle", correctWord: "nice",
-      otherTwo: ["comedian", "sympathetic"],
-      correctedSentence: "The comedian was sympathetic and always nice with children in the audience.",
-      explanation: `<span class='wrong-def'>"Gentle"</span> = soft or delicate (e.g. a gentle touch or breeze). To say someone is polite and pleasant toward others, the correct word is <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Comedian"</span> is correctly used here: a comedian portrays a character in a production and performs for audiences. ✓<br><span class='ok-def'>"Sympathetic"</span> is correctly used here: sympathetic means sensitive to other people's emotions — a performer who connects emotionally with his audience. ✓`
-    },
-    {
-      // command❌ → order✅ | pencil✅(writing instrument) | bookstore✅(place to buy books)
-      sentence: "I need to command a pencil from the bookstore before my exam next week.",
-      falseWord: "command", correctWord: "order",
-      otherTwo: ["pencil", "bookstore"],
-      correctedSentence: "I need to order a pencil from the bookstore before my exam next week.",
-      explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority figure's directive. To request goods or food from a business, the correct verb is <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Pencil"</span> is correctly used here: a pencil is a writing instrument with a graphite tip, used for exams. ✓<br><span class='ok-def'>"Bookstore"</span> is correctly used here: a bookstore is a place to buy books and supplies. ✓`
-    },
-    {
-      // severe❌ → strict✅ | teacher✅(one whose job is to instruct) | supplies✅(items needed for work)
-      sentence: "My teacher was severe when I forgot my supplies at home before the exam.",
-      falseWord: "severe", correctWord: "strict",
-      otherTwo: ["teacher", "supplies"],
-      correctedSentence: "My teacher was strict when I forgot my supplies at home before the exam.",
-      explanation: `<span class='wrong-def'>"Severe"</span> = intense or violent (e.g. a severe storm, severe pain). A teacher who enforces rules and is firmly disciplinary is <span class='right-def'>"strict"</span>.<hr><span class='ok-def'>"Teacher"</span> is correctly used here: a teacher is one whose occupation is to instruct students. ✓<br><span class='ok-def'>"Supplies"</span> is correctly used here: supplies are the provisions and items needed for school (pens, notebooks, etc.). ✓`
-    },
-    {
-      // actually❌ → currently✅ | note✅(written message) | piece✅(stage representation)
-      sentence: "The actor checked his note and actually rehearses for the piece every evening.",
-      falseWord: "actually", correctWord: "currently",
-      otherTwo: ["note", "piece"],
-      correctedSentence: "The actor checked his note and currently rehearses for the piece every evening.",
-      explanation: `<span class='wrong-def'>"Actually"</span> = in fact (used to correct or emphasize something). To say something is happening right now, at this moment, use <span class='right-def'>"currently"</span>.<hr><span class='ok-def'>"Note"</span> is correctly used here: a note is a written message or record of information — like a rehearsal schedule. ✓<br><span class='ok-def'>"Piece"</span> is correctly used here: a piece is the stage representation of an action or story — a theatrical production. ✓`
-    },
-    {
-      // vacancy❌ → vacation✅ | play✅(a part of a whole) | piece✅(stage representation)
-      sentence: "During my vacancy, I saw a piece at a beautiful theatre downtown.",
-      falseWord: "vacancy", correctWord: "vacation",
-      otherTwo: ["piece", "theatre"],
-      correctedSentence: "During my vacation, I saw a piece at a beautiful theatre downtown.",
-      explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an unfilled position. A period of travel and leisure is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Piece"</span> is correctly used here: a piece is the stage representation of an action or story — seeing a piece at a theatre is perfectly natural. ✓<br><span class='ok-def'>"Theatre"</span> is not a false cognate from the list — it is used as context here. ✓`
-    },
-    {
-      // fine❌ → kind✅ | professor✅(highest rank faculty) | sentence✅(complete thought)
-      sentence: "My professor is actually very fine — she explains every sentence clearly.",
-      falseWord: "fine", correctWord: "kind",
-      otherTwo: ["professor", "sentence"],
-      correctedSentence: "My professor is actually very kind — she explains every sentence clearly.",
-      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> is correctly used here: a professor is a faculty member of the highest academic rank who teaches at a university. ✓<br><span class='ok-def'>"Sentence"</span> is correctly used here: a sentence is a complete thought, finishing with a period — the unit a professor explains. ✓`
-    },
-    {
-      // sensible❌ → sensitive✅ | infant✅(baby/very young) | conductor✅(drives train)
-      sentence: "The sensible infant began to cry when the conductor screamed at the passengers.",
-      falseWord: "sensible", correctWord: "sensitive",
-      otherTwo: ["infant", "conductor"],
-      correctedSentence: "The sensitive infant began to cry when the conductor screamed at the passengers.",
-      explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and wisdom. A baby who cries easily due to loud noises or emotions is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Infant"</span> is correctly used here: an infant is a baby or very young person who would naturally cry at loud sounds. ✓<br><span class='ok-def'>"Conductor"</span> is correctly used here: a conductor is someone who drives/operates a train and interacts with passengers. ✓`
-    },
-    {
-      // demand❌ → ask✅ | relative✅(anyone in family) | doctor✅(person who helps sick)
-      sentence: "My relative demanded the doctor why the medicine was so expensive.",
-      falseWord: "demanded", correctWord: "asked",
-      otherTwo: ["relative", "doctor"],
-      correctedSentence: "My relative asked the doctor why the medicine was so expensive.",
-      explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — it does not mean to pose a question. To politely ask someone a question, use <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Relative"</span> is correctly used here: a relative means anyone in your family. ✓<br><span class='ok-def'>"Doctor"</span> is correctly used here: a doctor is the person who helps sick people — the one you ask about medicine prices. ✓`
-    },
-    {
-      // cave❌ → basement✅ | photographer✅(person who takes pictures) | severe✅(intense/violent)
-      sentence: "The photographer stayed in the cave below the old house during the severe storm.",
-      falseWord: "cave", correctWord: "basement",
-      otherTwo: ["photographer", "severe"],
-      correctedSentence: "The photographer stayed in the basement below the old house during the severe storm.",
-      explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — it is not part of a house. The underground level of a building is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Photographer"</span> is correctly used here: a photographer is the person who takes pictures professionally. ✓<br><span class='ok-def'>"Severe"</span> is correctly used here: a severe storm is an intense, violent storm — a natural and correct usage. ✓`
-    },
-    {
-      // command❌ → order✅ | teacher✅(one whose job is to instruct) | crayon✅(waxy stick for colouring)
-      sentence: "My teacher commanded a new set of supplies and a crayon for the art class.",
-      falseWord: "commanded", correctWord: "ordered",
-      otherTwo: ["teacher", "crayon"],
-      correctedSentence: "My teacher ordered a new set of supplies and a crayon for the art class.",
-      explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an order of authority. To request goods from a business or catalogue, the correct word is <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Teacher"</span> is correctly used here: a teacher is one whose occupation is to instruct — ordering class materials is a normal action. ✓<br><span class='ok-def'>"Crayon"</span> is correctly used here here: a crayon is a waxy colouring stick used by children — perfect for an art class. ✓`
-    },
-    {
-      // fine❌ → kind✅ | doctor✅(helps sick people) | infant✅(baby/very young)
-      sentence: "She is a fine doctor who gives gentle care to every infant in the clinic.",
-      falseWord: "fine", correctWord: "kind",
-      otherTwo: ["doctor", "infant"],
-      correctedSentence: "She is a kind doctor who gives gentle care to every infant in the clinic.",
-      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "The results are fine"). To describe a doctor who is helpful and caring toward patients, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Doctor"</span> is correctly used here: a doctor is the person who helps sick people — working in a clinic is typical. ✓<br><span class='ok-def'>"Infant"</span> is correctly used here: an infant is a baby or very young child — common patients in a clinic. ✓`
-    },
-    {
-      // cry❌ → scream✅ | comedian✅(portrays character) | sentence✅(complete thought)
-      sentence: "The comedian cried at the audience when he forgot his sentence on stage.",
-      falseWord: "cried", correctWord: "screamed",
-      otherTwo: ["comedian", "sentence"],
-      correctedSentence: "The comedian screamed at the audience when he forgot his sentence on stage.",
-      explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise the volume of your voice at someone out of frustration, the correct word is <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> is correctly used here: a comedian portrays a character in a production and performs on stage. ✓<br><span class='ok-def'>"Sentence"</span> is correctly used here: a sentence is a complete thought — a performer forgets their lines (complete sentences) on stage. ✓`
-    },
-    {
-      // library❌ → bookstore✅ | relative✅(anyone in family) | currently✅(at this moment)
-      sentence: "My relative works with dangerous mechanics and currently lives near a library.",
-      falseWord: "library", correctWord: "bookstore",
-      otherTwo: ["relative", "currently"],
-      correctedSentence: "My relative works with dangerous mechanics and currently lives near a bookstore.",
-      explanation: `<span class='wrong-def'>"Library"</span> = a place to borrow books for free — you cannot shop there. Living near a place that sells things implies a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> is correctly used here: a relative means anyone in your family. ✓<br><span class='ok-def'>"Currently"</span> is correctly used here: currently means at this moment, right now. ✓`
-    },
-    {
-      // figure❌ → face✅ | photographer✅(person who takes pictures) | basement✅(below ground level)
-      sentence: "The photographer took pictures of the figure on the wall and the child in the basement.",
-      falseWord: "figure", correctWord: "face",
-      otherTwo: ["photographer", "basement"],
-      correctedSentence: "The photographer took pictures of the face on the wall and the child in the basement.",
-      explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of someone's entire body. A picture painted or drawn on a wall showing eyes, nose and mouth is a <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Photographer"</span> is correctly used here: a photographer is the person who takes pictures professionally. ✓<br><span class='ok-def'>"Basement"</span> is correctly used here: a basement is the part of a house below ground level. ✓`
-    },
-    {
-      // sympathetic❌ → nice✅ | actor✅(tells jokes/performs comedy) | piece✅(stage representation)
-      sentence: "The actor was sympathetic and gave a wonderful performance in the piece.",
-      falseWord: "sympathetic", correctWord: "nice",
-      otherTwo: ["actor", "piece"],
-      correctedSentence: "The actor was nice and gave a wonderful performance in the piece.",
-      explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not a word for describing pleasantness or friendliness in general. To say someone is agreeable and pleasant, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Actor"</span> is correctly used here: an actor is someone who writes or tells jokes and may perform — here performing in a theatrical piece. ✓<br><span class='ok-def'>"Piece"</span> is correctly used here: a piece is the stage representation of an action or story — a theatrical production. ✓`
-    },
-    {
-      // note❌ → mark✅ | professor✅(highest rank faculty) | sensitive✅(emotionally delicate)
-      sentence: "The professor gave a low note to the sensitive student who had worked very hard.",
-      falseWord: "note", correctWord: "mark",
-      otherTwo: ["professor", "sensitive"],
-      correctedSentence: "The professor gave a low mark to the sensitive student who had worked very hard.",
-      explanation: `<span class='wrong-def'>"Note"</span> = a written message or record of information. A number that shows the evaluation of school work is a <span class='right-def'>"mark"</span>.<hr><span class='ok-def'>"Professor"</span> is correctly used here: a professor is a faculty member of the highest academic rank who grades students. ✓<br><span class='ok-def'>"Sensitive"</span> is correctly used here: a sensitive person is emotionally delicate — they would be affected by a low grade. ✓`
-    },
-    {
-      // parent❌ → relative✅ | vacation✅(period of travel) | stay✅(living in a place)
-      sentence: "All of her parents, including her cousins, wanted her to stay during the vacation.",
-      falseWord: "parents", correctWord: "relatives",
-      otherTwo: ["vacation", "stay"],
-      correctedSentence: "All of her relatives, including her cousins, wanted her to stay during the vacation.",
-      explanation: `<span class='wrong-def'>"Parent"</span> = your mother or father only — it cannot include cousins. Anyone in your family (mother, father, aunt, uncle, cousin) is a <span class='right-def'>"relative"</span>.<hr><span class='ok-def'>"Vacation"</span> is correctly used here: a vacation is a period spent away from home for travel or recreation. ✓<br><span class='ok-def'>"Stay"</span> is correctly used here: to stay means to live or remain in a place. ✓`
-    }
-  ];
+    const items = [
+      {
+        sentence: "My professor told me to write a phrase explaining what makes a library different from a bookstore.",
+        falseWord: "phrase", correctWord: "sentence",
+        otherTwo: ["professor", "library"],
+        correctedSentence: "My professor told me to write a sentence explaining what makes a library different from a bookstore.",
+        explanation: `<span class='wrong-def'>"Phrase"</span> = a group of words without a subject+verb — not a complete thought. A complete thought ending with a period is a <span class='right-def'>"sentence"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who assigns written work.<br><span class='ok-def'>"Library"</span> ✓ — a place where you borrow books for free with a membership card.`
+      },
+      {
+        sentence: "The conductor asked his relative to stay home because the temperature outside was dangerous.",
+        falseWord: "temperature", correctWord: "weather",
+        otherTwo: ["conductor", "stay"],
+        correctedSentence: "The conductor asked his relative to stay home because the weather outside was dangerous.",
+        explanation: `<span class='wrong-def'>"Temperature"</span> = only a degree of heat or cold on a scale (e.g. 30°C). When describing rain, wind or stormy conditions, use <span class='right-def'>"weather"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
+      },
+      {
+        sentence: "The photographer used a crayon to label her supplies before the shoot.",
+        falseWord: "crayon", correctWord: "pencil",
+        otherTwo: ["photographer", "supplies"],
+        correctedSentence: "The photographer used a pencil to label her supplies before the shoot.",
+        explanation: `<span class='wrong-def'>"Crayon"</span> = a waxy colouring stick used by children — not a writing instrument. To write or label something you need a <span class='right-def'>"pencil"</span>, which has a graphite tip.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for work.`
+      },
+      {
+        sentence: "My relative bought all his furniture at the library across the street.",
+        falseWord: "library", correctWord: "bookstore",
+        otherTwo: ["relative", "furniture"],
+        correctedSentence: "My relative bought all his furniture at the bookstore across the street.",
+        explanation: `<span class='wrong-def'>"Library"</span> = a place where you borrow books for free — you cannot buy anything there. A store where you purchase books and supplies is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family (aunt, uncle, cousin, etc.).<br><span class='ok-def'>"Furniture"</span> ✓ — items found in rooms at home such as couches, chairs and tables.`
+      },
+      {
+        sentence: "The comedian forgot his lines and began to cry at the director during the piece.",
+        falseWord: "cry", correctWord: "scream",
+        otherTwo: ["comedian", "piece"],
+        correctedSentence: "The comedian forgot his lines and began to scream at the director during the piece.",
+        explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise the volume of your voice at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — in English, a comedian is someone who portrays a character in a production.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
+      },
+      {
+        sentence: "The comedian needed a doctor because he hurt his figure during rehearsal.",
+        falseWord: "figure", correctWord: "face",
+        otherTwo: ["comedian", "doctor"],
+        correctedSentence: "The comedian needed a doctor because he hurt his face during rehearsal.",
+        explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of a person's entire body. The part of the head that includes the eyes, nose and mouth is the <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick or injured people.`
+      },
+      {
+        sentence: "My professor is very fine — she never gives severe punishments to her students.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["professor", "severe"],
+        correctedSentence: "My professor is very kind — she never gives severe punishments to her students.",
+        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank at a university.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe punishment is an extreme one.`
+      },
+      {
+        sentence: "During the vacancy, the infant stayed in the basement with his parents every evening.",
+        falseWord: "vacancy", correctWord: "vacation",
+        otherTwo: ["infant", "basement"],
+        correctedSentence: "During the vacation, the infant stayed in the basement with his parents every evening.",
+        explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an available position (e.g. a job vacancy). A period of travel and recreation is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
+      },
+      {
+        sentence: "The sensible child began to cry when the strict teacher gave her a low mark.",
+        falseWord: "sensible", correctWord: "sensitive",
+        otherTwo: ["strict", "mark"],
+        correctedSentence: "The sensitive child began to cry when the strict teacher gave her a low mark.",
+        explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and being wise. A child who cries easily is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Strict"</span> ✓ — rigid and disciplinary; a strict teacher enforces rules firmly.<br><span class='ok-def'>"Mark"</span> ✓ — a number showing the evaluation of school work.`
+      },
+      {
+        sentence: "My relative is a comedian who actually stays in a cave when he travels for shows.",
+        falseWord: "cave", correctWord: "basement",
+        otherTwo: ["comedian", "actually"],
+        correctedSentence: "My relative is a comedian who actually stays in a basement when he travels for shows.",
+        explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground floor of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs in shows.<br><span class='ok-def'>"Actually"</span> ✓ — means "in fact", used here to emphasize a surprising truth.`
+      },
+      {
+        sentence: "She demanded the conductor why the driver was going so fast.",
+        falseWord: "demanded", correctWord: "asked",
+        otherTwo: ["conductor", "driver"],
+        correctedSentence: "She asked the conductor why the driver was going so fast.",
+        explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — it does not mean to ask a question politely. The correct word is <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Driver"</span> ✓ — someone who drives a car, bus or taxi.`
+      },
+      {
+        sentence: "The doctor told the infant to rest at home and take his medicine twice a day.",
+        falseWord: "rest", correctWord: "stay",
+        otherTwo: ["doctor", "medicine"],
+        correctedSentence: "The doctor told the infant to stay at home and take his medicine twice a day.",
+        explanation: `<span class='wrong-def'>"Rest"</span> = stopping for a moment to take a break. To remain and live in a place, the correct word is <span class='right-def'>"stay"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people and prescribes medicine.<br><span class='ok-def'>"Medicine"</span> ✓ — a substance or preparation used in treating disease.`
+      },
+      {
+        sentence: "My relative works with dangerous mechanics in a factory and is currently looking for a new job.",
+        falseWord: "mechanics", correctWord: "machinery",
+        otherTwo: ["relative", "currently"],
+        correctedSentence: "My relative works with dangerous machinery in a factory and is currently looking for a new job.",
+        explanation: `<span class='wrong-def'>"Mechanic"</span> = a person who repairs engines — a human worker, not equipment. The machines in a factory are called <span class='right-def'>"machinery"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
+      },
+      {
+        sentence: "The photograph left a note for his clients before leaving for vacation.",
+        falseWord: "photograph", correctWord: "photographer",
+        otherTwo: ["note", "vacation"],
+        correctedSentence: "The photographer left a note for his clients before leaving for vacation.",
+        explanation: `<span class='wrong-def'>"Photograph"</span> = a picture — it is an object, not a person. The person who takes pictures professionally is a <span class='right-def'>"photographer"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information left for someone.<br><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.`
+      },
+      {
+        sentence: "She is a sympathetic teacher who gives good marks and stays after class to help.",
+        falseWord: "sympathetic", correctWord: "nice",
+        otherTwo: ["marks", "stay"],
+        correctedSentence: "She is a nice teacher who gives good marks and stays after class to help.",
+        explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not pleasant or agreeable. A pleasant, helpful teacher is <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Marks"</span> ✓ — numbers showing the evaluation of school work.<br><span class='ok-def'>"Stays"</span> ✓ — to remain in a place; she stays after class.`
+      },
+      {
+        sentence: "The comedian was sympathetic and always gentle with children in the audience.",
+        falseWord: "gentle", correctWord: "nice",
+        otherTwo: ["comedian", "sympathetic"],
+        correctedSentence: "The comedian was sympathetic and always nice with children in the audience.",
+        explanation: `<span class='wrong-def'>"Gentle"</span> = soft or delicate (e.g. a gentle touch). To say someone is polite and pleasant toward others, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs for audiences.<br><span class='ok-def'>"Sympathetic"</span> ✓ — sensitive to other people's emotions; a performer who connects emotionally.`
+      },
+      {
+        sentence: "I need to command a pencil from the bookstore before my exam next week.",
+        falseWord: "command", correctWord: "order",
+        otherTwo: ["pencil", "bookstore"],
+        correctedSentence: "I need to order a pencil from the bookstore before my exam next week.",
+        explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Pencil"</span> ✓ — a writing instrument with a graphite tip, used for exams.<br><span class='ok-def'>"Bookstore"</span> ✓ — a place to buy books and supplies.`
+      },
+      {
+        sentence: "My teacher was severe when I forgot my supplies at home before the exam.",
+        falseWord: "severe", correctWord: "strict",
+        otherTwo: ["teacher", "supplies"],
+        correctedSentence: "My teacher was strict when I forgot my supplies at home before the exam.",
+        explanation: `<span class='wrong-def'>"Severe"</span> = intense or violent (e.g. a severe storm, severe pain). A teacher who firmly enforces rules is <span class='right-def'>"strict"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct students.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for school (pens, notebooks, etc.).`
+      },
+      {
+        sentence: "The actor checked his note and actually rehearses for the piece every evening.",
+        falseWord: "actually", correctWord: "currently",
+        otherTwo: ["note", "piece"],
+        correctedSentence: "The actor checked his note and currently rehearses for the piece every evening.",
+        explanation: `<span class='wrong-def'>"Actually"</span> = in fact (used to correct or emphasize). To say something is happening right now, use <span class='right-def'>"currently"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information, like a rehearsal schedule.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story — a theatrical production.`
+      },
+      {
+        sentence: "During my vacancy, I saw a piece at a beautiful theatre downtown.",
+        falseWord: "vacancy", correctWord: "vacation",
+        otherTwo: ["piece", "theatre"],
+        correctedSentence: "During my vacation, I saw a piece at a beautiful theatre downtown.",
+        explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an unfilled position. A period of leisure and travel is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story; seeing a piece at a theatre is perfectly natural.<br><span class='ok-def'>"Theatre"</span> ✓ — the venue where pieces and plays are performed.`
+      },
+      {
+        sentence: "My professor is actually very fine — she explains every sentence clearly.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["professor", "sentence"],
+        correctedSentence: "My professor is actually very kind — she explains every sentence clearly.",
+        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who teaches at a university.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought ending with a period; the unit a professor explains.`
+      },
+      {
+        sentence: "The sensible infant began to cry when the conductor screamed at the passengers.",
+        falseWord: "sensible", correctWord: "sensitive",
+        otherTwo: ["infant", "conductor"],
+        correctedSentence: "The sensitive infant began to cry when the conductor screamed at the passengers.",
+        explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and wisdom. A baby who cries at loud sounds is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person who would naturally cry at loud sounds.<br><span class='ok-def'>"Conductor"</span> ✓ — someone who drives/operates a train and interacts with passengers.`
+      },
+      {
+        sentence: "My relative demanded the doctor why the medicine was so expensive.",
+        falseWord: "demanded", correctWord: "asked",
+        otherTwo: ["relative", "doctor"],
+        correctedSentence: "My relative asked the doctor why the medicine was so expensive.",
+        explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — not to pose a question. To politely ask someone a question, use <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people; the one you ask about medicine.`
+      },
+      {
+        sentence: "The photographer stayed in the cave below the old house during the severe storm.",
+        falseWord: "cave", correctWord: "basement",
+        otherTwo: ["photographer", "severe"],
+        correctedSentence: "The photographer stayed in the basement below the old house during the severe storm.",
+        explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground level of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe storm is an extreme one.`
+      },
+      {
+        sentence: "My teacher commanded a new set of supplies and a crayon for the art class.",
+        falseWord: "commanded", correctWord: "ordered",
+        otherTwo: ["teacher", "crayon"],
+        correctedSentence: "My teacher ordered a new set of supplies and a crayon for the art class.",
+        explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a catalogue or business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct; ordering class materials is normal.<br><span class='ok-def'>"Crayon"</span> ✓ — a waxy colouring stick used by children; perfect for an art class.`
+      },
+      {
+        sentence: "She is a fine doctor who gives gentle care to every infant in the clinic.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["doctor", "infant"],
+        correctedSentence: "She is a kind doctor who gives gentle care to every infant in the clinic.",
+        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right. To describe a doctor who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people in a clinic.<br><span class='ok-def'>"Infant"</span> ✓ — a baby or very young child; common patients in a clinic.`
+      },
+      {
+        sentence: "The comedian cried at the audience when he forgot his sentence on stage.",
+        falseWord: "cried", correctWord: "screamed",
+        otherTwo: ["comedian", "sentence"],
+        correctedSentence: "The comedian screamed at the audience when he forgot his sentence on stage.",
+        explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise your voice loudly at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs on stage.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought; a performer can forget their lines (sentences) on stage.`
+      },
+      {
+        sentence: "My relative works with dangerous mechanics and currently lives near a library.",
+        falseWord: "library", correctWord: "bookstore",
+        otherTwo: ["relative", "currently"],
+        correctedSentence: "My relative works with dangerous mechanics and currently lives near a bookstore.",
+        explanation: `<span class='wrong-def'>"Library"</span> = a place to borrow books for free — you cannot shop there. A place that sells books is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
+      },
+      {
+        sentence: "The photographer took pictures of the figure on the wall and the child in the basement.",
+        falseWord: "figure", correctWord: "face",
+        otherTwo: ["photographer", "basement"],
+        correctedSentence: "The photographer took pictures of the face on the wall and the child in the basement.",
+        explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of someone's entire body. A painted image showing eyes, nose and mouth is a <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
+      },
+      {
+        sentence: "The actor was sympathetic and gave a wonderful performance in the piece.",
+        falseWord: "sympathetic", correctWord: "nice",
+        otherTwo: ["actor", "piece"],
+        correctedSentence: "The actor was nice and gave a wonderful performance in the piece.",
+        explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not a general word for pleasant or friendly. To say someone is agreeable and pleasant, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Actor"</span> ✓ — someone who writes or tells jokes and performs; here performing in a theatrical piece.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
+      },
+      {
+        sentence: "The professor gave a low note to the sensitive student who had worked very hard.",
+        falseWord: "note", correctWord: "mark",
+        otherTwo: ["professor", "sensitive"],
+        correctedSentence: "The professor gave a low mark to the sensitive student who had worked very hard.",
+        explanation: `<span class='wrong-def'>"Note"</span> = a written message or record of information. A number showing the evaluation of school work is a <span class='right-def'>"mark"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who grades students.<br><span class='ok-def'>"Sensitive"</span> ✓ — emotionally delicate; a sensitive student would be upset by a low grade.`
+      },
+      {
+        sentence: "All of her parents, including her cousins, wanted her to stay during the vacation.",
+        falseWord: "parents", correctWord: "relatives",
+        otherTwo: ["vacation", "stay"],
+        correctedSentence: "All of her relatives, including her cousins, wanted her to stay during the vacation.",
+        explanation: `<span class='wrong-def'>"Parent"</span> = your mother or father only — it cannot include cousins. Anyone in your family is a <span class='right-def'>"relative"</span>.<hr><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
+      }
+    ];
 
     let currentIndex = -1;
     let answered = false;
@@ -502,6 +439,20 @@
       updateScore();
     }
 
+    function normalise(str) {
+      return str.trim().toLowerCase().replace(/ed$/, "").replace(/s$/, "");
+    }
+
+    function showSolution() {
+      const item = items[currentIndex];
+      document.getElementById("ansWrong").textContent        = `"${item.falseWord}"`;
+      document.getElementById("correctWord").textContent     = item.correctWord;
+      document.getElementById("ansOk").textContent           = item.otherTwo.map(w => `"${w}"`).join("  &  ");
+      document.getElementById("correctSentence").textContent = item.correctedSentence;
+      document.getElementById("ansExplanation").innerHTML    = item.explanation;
+      document.getElementById("answerBlock").style.display   = "block";
+    }
+
     function checkAnswer() {
       if (currentIndex < 0 || answered) return;
       const userRaw  = document.getElementById("userInput").value;
@@ -509,23 +460,23 @@
       const correct  = normalise(items[currentIndex].correctWord);
       const feedback = document.getElementById("feedback");
       const input    = document.getElementById("userInput");
-    
+
       if (!userRaw.trim()) {
         feedback.textContent = "✏️ Please type your answer first.";
         feedback.className = "fb-wrong";
         return;
       }
-    
+
       scoreTotal++;
       answered = true;
-    
+
       if (user === correct) {
         scoreCorrect++;
         feedback.textContent = "✅ Correct! Well done.";
         feedback.className = "fb-correct";
         input.classList.add("correct-input");
         spawnConfetti();
-        showSolution(); // ← ajout ici
+        showSolution();
       } else {
         scoreWrong++;
         feedback.textContent = `❌ Not quite. The false cognate was "${items[currentIndex].falseWord}".`;
@@ -536,19 +487,6 @@
         showSolution();
       }
       updateScore();
-    }
-
-
-    function showSolution() {
-      if (currentIndex < 0) return;
-      answered = true;
-      const item = items[currentIndex];
-      document.getElementById("ansWrong").textContent         = `"${item.falseWord}"`;
-      document.getElementById("correctWord").textContent      = item.correctWord;
-      document.getElementById("ansOk").textContent            = item.otherTwo.map(w => `"${w}"`).join("  &  ");
-      document.getElementById("correctSentence").textContent  = item.correctedSentence;
-      document.getElementById("ansExplanation").innerHTML     = item.explanation;
-      document.getElementById("answerBlock").style.display    = "block";
     }
 
     function spawnConfetti() {
@@ -570,7 +508,7 @@
     }
 
     document.getElementById("checkBtn").addEventListener("click", checkAnswer);
-    document.getElementById("showBtn").addEventListener("click", showSolution);
+    document.getElementById("showBtn").addEventListener("click", () => { answered = true; showSolution(); });
     document.getElementById("newBtn").addEventListener("click", pickRandomItem);
     document.getElementById("userInput").addEventListener("keydown", e => {
       if (e.key === "Enter") checkAnswer();
