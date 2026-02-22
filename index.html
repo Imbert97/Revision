@@ -5,352 +5,578 @@
   <title>False Cognates Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 1.5rem;
-      background: #f5f5f5;
-      color: #222;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem 1rem 3rem;
+      color: #f1f5f9;
     }
-    .card {
-      max-width: 700px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    h1 {
-      font-size: 1.4rem;
-      margin-top: 0;
-      margin-bottom: 0.75rem;
+
+    header {
       text-align: center;
+      margin-bottom: 1.5rem;
     }
-    p {
-      line-height: 1.5;
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #93c5fd;
     }
+
+    header p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      margin-top: 0.3rem;
+    }
+
+    /* Score bar */
+    .scorebar {
+      display: flex;
+      gap: 1.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 0.5rem 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .scorebar span { color: #cbd5e1; }
+    .scorebar strong { color: #38bdf8; }
+
+    /* Progress bar */
+    .progress-wrap {
+      width: 100%;
+      max-width: 640px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      height: 6px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 1.8rem;
+      width: 100%;
+      max-width: 640px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      transition: transform 0.2s;
+    }
+
+    .question-num {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 0.6rem;
+    }
+
     #sentence {
       font-size: 1.15rem;
-      margin: 1.25rem 0;
+      line-height: 1.7;
+      color: #e2e8f0;
+      min-height: 3.5rem;
+      margin-bottom: 1.4rem;
     }
-    .label {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 0.2rem;
+
+    /* highlight the false cognate */
+    .highlight {
+      background: rgba(251,191,36,0.18);
+      color: #fbbf24;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 600;
     }
-    input[type="text"] {
-      width: 100%;
-      padding: 0.5rem 0.6rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    .buttons {
-      margin-top: 1rem;
+
+    /* Input */
+    .input-row {
       display: flex;
-      flex-wrap: wrap;
       gap: 0.5rem;
+      margin-bottom: 1rem;
     }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      color: #f1f5f9;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    input[type="text"]::placeholder { color: #475569; }
+    input[type="text"]:focus { border-color: #38bdf8; }
+
+    input.correct-input { border-color: #22c55e !important; }
+    input.wrong-input   { border-color: #ef4444 !important; }
+
+    /* Buttons */
+    .buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
     button {
       flex: 1 1 120px;
-      padding: 0.6rem 0.8rem;
+      padding: 0.65rem 1rem;
       font-size: 0.95rem;
-      border-radius: 999px;
+      font-weight: 600;
+      border-radius: 12px;
       border: none;
       cursor: pointer;
-      background: #2563eb;
-      color: #fff;
+      transition: opacity 0.15s, transform 0.1s;
     }
-    button.secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    button:active {
-      opacity: 0.8;
-    }
+
+    button:active { opacity: 0.8; transform: scale(0.97); }
+
+    .btn-check  { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }
+    .btn-reveal { background: rgba(255,255,255,0.08); color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
+    .btn-next   { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; }
+
+    /* Feedback */
     #feedback {
       margin-top: 1rem;
-      min-height: 1.5rem;
-      font-size: 0.98rem;
+      min-height: 1.4rem;
+      font-size: 0.97rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
-    .correct {
-      color: #15803d;
-    }
-    .incorrect {
-      color: #b91c1c;
-    }
-    #help {
-      margin-top: 0.75rem;
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
+
+    .fb-correct { color: #4ade80; }
+    .fb-wrong   { color: #f87171; }
+    .fb-reveal  { color: #94a3b8; }
+
+    /* Answer panel */
     #answerBlock {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-      color: #374151;
       display: none;
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: #cbd5e1;
     }
-    #answerBlock span {
-      font-weight: 600;
+
+    #answerBlock .ans-label { color: #64748b; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.8px; }
+    #answerBlock .ans-word  { color: #34d399; font-weight: 700; font-size: 1.05rem; }
+    #answerBlock .ans-sent  { color: #e2e8f0; margin-top: 0.3rem; font-style: italic; }
+
+    /* Shake animation */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-6px); }
+      40%      { transform: translateX(6px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }
+    .shake { animation: shake 0.35s ease; }
+
+    /* Pop animation */
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+    .pop { animation: pop 0.3s ease; }
+
+    /* Hint */
+    .hint {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: #475569;
+      text-align: center;
+    }
+
+    /* Confetti burst — purely CSS */
+    @keyframes confetti-drop {
+      0%   { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(80px) rotate(360deg); opacity: 0; }
+    }
+    .confetti-wrapper {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: 999;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 8px; height: 14px;
+      border-radius: 2px;
+      animation: confetti-drop 0.9s ease forwards;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>False Cognates Quiz</h1>
-    <p>One word in the sentence is a false cognate. Replace it with the correct English word.</p>
 
+  <header>
+    <h1>🎯 False Cognates Quiz</h1>
+    <p>Find the ONE false cognate in the sentence and type the correct word.</p>
+  </header>
+
+  <div class="scorebar">
+    <span>✅ Correct: <strong id="scoreCorrect">0</strong></span>
+    <span>❌ Wrong: <strong id="scoreWrong">0</strong></span>
+    <span>📋 Total: <strong id="scoreTotal">0</strong></span>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="card" id="card">
+    <div class="question-num" id="qNum">Question —</div>
     <div id="sentence"></div>
 
-    <div>
-      <div class="label">Your correction (write only the correct word):</div>
-      <input id="userInput" type="text" autocomplete="off" />
+    <div class="input-row">
+      <input type="text" id="userInput" placeholder="Type the correct word…" autocomplete="off" />
     </div>
 
     <div class="buttons">
-      <button id="checkBtn">Check answer</button>
-      <button id="showBtn" class="secondary">Show solution</button>
-      <button id="newBtn" class="secondary">New random sentence</button>
+      <button class="btn-check"  id="checkBtn">✔ Check</button>
+      <button class="btn-reveal" id="showBtn">👁 Reveal</button>
+      <button class="btn-next"   id="newBtn">→ New sentence</button>
     </div>
 
     <div id="feedback"></div>
+
     <div id="answerBlock">
-      Correct word: <span id="correctWord"></span><br />
-      Full corrected sentence: <span id="correctSentence"></span>
+      <div class="ans-label">Correct word</div>
+      <div class="ans-word" id="correctWord"></div>
+      <div class="ans-label" style="margin-top:0.6rem">Corrected sentence</div>
+      <div class="ans-sent" id="correctSentence"></div>
     </div>
 
-    <div id="help">
-      Tip: Focus on the single strange word that looks French. Replace only that word with the correct English word.
-    </div>
+    <div class="hint">💡 Tip — the false cognate looks like a French word but means something different in English.</div>
   </div>
 
   <script>
-    // 30 sentences with exactly one false cognate each.
-    // For each item, we store:
-    // - sentence: with the wrong (false cognate) word
-    // - falseWord: the wrong word
-    // - correctWord: the right English word
-    // - correctedSentence: sentence with the correct word
+    // Each item has:
+    //   sentence      : the sentence containing the false cognate (and other innocent cognate-like words)
+    //   falseWord     : the incorrect word used
+    //   correctWord   : what it should be
+    //   correctedSentence : the fixed sentence
     const items = [
+      // Original 28 from the course
       {
         sentence: "They decided to have a finished cave in their new house.",
-        falseWord: "cave",
-        correctWord: "basement",
+        falseWord: "cave", correctWord: "basement",
         correctedSentence: "They decided to have a finished basement in their new house."
       },
       {
         sentence: "Melvin asked the conductor of the bus why he was going so fast.",
-        falseWord: "conductor",
-        correctWord: "driver",
+        falseWord: "conductor", correctWord: "driver",
         correctedSentence: "Melvin asked the driver of the bus why he was going so fast."
       },
       {
         sentence: "I hope to get good notes in all of my courses this semester.",
-        falseWord: "notes",
-        correctWord: "marks",
+        falseWord: "notes", correctWord: "marks",
         correctedSentence: "I hope to get good marks in all of my courses this semester."
       },
       {
         sentence: "All of her parents, including her cousins, wanted to help her, but she refused.",
-        falseWord: "parents",
-        correctWord: "relatives",
+        falseWord: "parents", correctWord: "relatives",
         correctedSentence: "All of her relatives, including her cousins, wanted to help her, but she refused."
       },
       {
         sentence: "The photograph took some excellent pictures at our family reunion.",
-        falseWord: "photograph",
-        correctWord: "photographer",
+        falseWord: "photograph", correctWord: "photographer",
         correctedSentence: "The photographer took some excellent pictures at our family reunion."
       },
       {
         sentence: "How long will your brother rest in the college residence?",
-        falseWord: "rest",
-        correctWord: "stay",
+        falseWord: "rest", correctWord: "stay",
         correctedSentence: "How long will your brother stay in the college residence?"
       },
       {
-        sentence: "Why is Jennifer crying at her sister? I didn’t know she could be so loud!",
-        falseWord: "crying",
-        correctWord: "screaming",
-        correctedSentence: "Why is Jennifer screaming at her sister? I didn’t know she could be so loud!"
+        sentence: "Why is Jennifer crying at her sister? I didn't know she could be so loud!",
+        falseWord: "crying", correctWord: "screaming",
+        correctedSentence: "Why is Jennifer screaming at her sister? I didn't know she could be so loud!"
       },
       {
         sentence: "The producer needs excellent comedians for a Shakespearean tragedy.",
-        falseWord: "comedians",
-        correctWord: "actors",
+        falseWord: "comedians", correctWord: "actors",
         correctedSentence: "The producer needs excellent actors for a Shakespearean tragedy."
       },
       {
-        sentence: "Actually, I’m a teacher but I soon intend to change jobs.",
-        falseWord: "Actually",
-        correctWord: "Currently",
-        correctedSentence: "Currently, I’m a teacher but I soon intend to change jobs."
+        sentence: "Actually, I'm a teacher but I soon intend to change jobs.",
+        falseWord: "Actually", correctWord: "Currently",
+        correctedSentence: "Currently, I'm a teacher but I soon intend to change jobs."
       },
       {
-        sentence: "He’s a very gentle man as he is always prepared to help people.",
-        falseWord: "gentle",
-        correctWord: "kind",
-        correctedSentence: "He’s a very kind man as he is always prepared to help people."
+        sentence: "He's a very gentle man as he is always prepared to help people.",
+        falseWord: "gentle", correctWord: "kind",
+        correctedSentence: "He's a very kind man as he is always prepared to help people."
       },
       {
-        sentence: "What do you like on your pizza? I’m going to command one for supper.",
-        falseWord: "command",
-        correctWord: "order",
-        correctedSentence: "What do you like on your pizza? I’m going to order one for supper."
+        sentence: "What do you like on your pizza? I'm going to command one for supper.",
+        falseWord: "command", correctWord: "order",
+        correctedSentence: "What do you like on your pizza? I'm going to order one for supper."
       },
       {
         sentence: "He has a chubby figure, but the rest of his body is thin.",
-        falseWord: "figure",
-        correctWord: "face",
+        falseWord: "figure", correctWord: "face",
         correctedSentence: "He has a chubby face, but the rest of his body is thin."
       },
       {
-        sentence: "I can’t believe my sister is crying because I made a funny face at her. She is too sensible in my opinion.",
-        falseWord: "sensible",
-        correctWord: "sensitive",
-        correctedSentence: "I can’t believe my sister is crying because I made a funny face at her. She is too sensitive in my opinion."
+        sentence: "I can't believe my sister is crying because I made a funny face at her. She is too sensible in my opinion.",
+        falseWord: "sensible", correctWord: "sensitive",
+        correctedSentence: "I can't believe my sister is crying because I made a funny face at her. She is too sensitive in my opinion."
       },
       {
-        sentence: "It is difficult to get an appointment to see a medicine these days.",
-        falseWord: "medicine",
-        correctWord: "doctor",
-        correctedSentence: "It is difficult to get an appointment to see a doctor these days."
+        sentence: "It is difficult to get an appointment to see a medicine these days. If I call today I might see someone in 3 months.",
+        falseWord: "medicine", correctWord: "doctor",
+        correctedSentence: "It is difficult to get an appointment to see a doctor these days. If I call today I might see someone in 3 months."
       },
       {
-        sentence: "I didn’t know you had a four-year-old infant. Does he go to school next year?",
-        falseWord: "infant",
-        correctWord: "child",
-        correctedSentence: "I didn’t know you had a four-year-old child. Does he go to school next year?"
+        sentence: "I didn't know you had a four-year-old infant. Does he go to school next year?",
+        falseWord: "infant", correctWord: "child",
+        correctedSentence: "I didn't know you had a four-year-old child. Does he go to school next year?"
       },
       {
         sentence: "My neighbour helped me carry my new TV into my house. He is very fine.",
-        falseWord: "fine",
-        correctWord: "kind",
+        falseWord: "fine", correctWord: "kind",
         correctedSentence: "My neighbour helped me carry my new TV into my house. He is very kind."
       },
       {
         sentence: "Can I demand you something? How often do you buy new shoes?",
-        falseWord: "demand",
-        correctWord: "ask",
+        falseWord: "demand", correctWord: "ask",
         correctedSentence: "Can I ask you something? How often do you buy new shoes?"
       },
       {
         sentence: "What is the temperature like? Is it raining today? Do I need an umbrella?",
-        falseWord: "temperature",
-        correctWord: "weather",
+        falseWord: "temperature", correctWord: "weather",
         correctedSentence: "What is the weather like? Is it raining today? Do I need an umbrella?"
       },
       {
-        sentence: "I just got back from a vacancy in the Caribbean and I’m feeling very refreshed.",
-        falseWord: "vacancy",
-        correctWord: "vacation",
-        correctedSentence: "I just got back from a vacation in the Caribbean and I’m feeling very refreshed."
+        sentence: "I just got back from a vacancy in the Caribbean and I'm feeling very refreshed.",
+        falseWord: "vacancy", correctWord: "vacation",
+        correctedSentence: "I just got back from a vacation in the Caribbean and I'm feeling very refreshed."
       },
       {
         sentence: "While I was in New York I saw a piece on Broadway in a beautiful, historic theatre in Manhattan.",
-        falseWord: "piece",
-        correctWord: "play",
+        falseWord: "piece", correctWord: "play",
         correctedSentence: "While I was in New York I saw a play on Broadway in a beautiful, historic theatre in Manhattan."
       },
       {
         sentence: "At the beginning of each semester, I always try to buy my furniture at the university bookstore before the lines are too long.",
-        falseWord: "furniture",
-        correctWord: "books",
-        correctedSentence: "At the beginning of each semester, I always try to buy my books at the university bookstore before the lines are too long."
+        falseWord: "furniture", correctWord: "supplies",
+        correctedSentence: "At the beginning of each semester, I always try to buy my supplies at the university bookstore before the lines are too long."
       },
       {
         sentence: "My uncle works in a tire factory with a lot of dangerous mechanics.",
-        falseWord: "mechanics",
-        correctWord: "machinery",
+        falseWord: "mechanics", correctWord: "machinery",
         correctedSentence: "My uncle works in a tire factory with a lot of dangerous machinery."
       },
       {
-        sentence: "I have only been in my English class for two weeks but my classmates seem very sympathetic.",
-        falseWord: "sympathetic",
-        correctWord: "nice",
-        correctedSentence: "I have only been in my English class for two weeks but my classmates seem very nice."
+        sentence: "I have only been in my English class for two weeks but my classmates seem very sympathetic. I think it will be a fun semester.",
+        falseWord: "sympathetic", correctWord: "nice",
+        correctedSentence: "I have only been in my English class for two weeks but my classmates seem very nice. I think it will be a fun semester."
       },
       {
         sentence: "When I was young, my favourite professor was Ms. Hendricks. She taught grade-five math.",
-        falseWord: "professor",
-        correctWord: "teacher",
+        falseWord: "professor", correctWord: "teacher",
         correctedSentence: "When I was young, my favourite teacher was Ms. Hendricks. She taught grade-five math."
       },
       {
         sentence: "I always have a big credit card bill after getting my books at the university library when each semester begins.",
-        falseWord: "library",
-        correctWord: "bookstore",
+        falseWord: "library", correctWord: "bookstore",
         correctedSentence: "I always have a big credit card bill after getting my books at the university bookstore when each semester begins."
       },
       {
         sentence: "Can I borrow a crayon from you so I can write my exam? I forgot mine at home.",
-        falseWord: "crayon",
-        correctWord: "pencil",
+        falseWord: "crayon", correctWord: "pencil",
         correctedSentence: "Can I borrow a pencil from you so I can write my exam? I forgot mine at home."
       },
       {
         sentence: "When writing, I always check my phrases for correct punctuation.",
-        falseWord: "phrases",
-        correctWord: "sentences",
+        falseWord: "phrases", correctWord: "sentences",
         correctedSentence: "When writing, I always check my sentences for correct punctuation."
       },
       {
         sentence: "My basketball coach does not like it if someone is late for practice. I find he is very severe.",
-        falseWord: "severe",
-        correctWord: "strict",
+        falseWord: "severe", correctWord: "strict",
         correctedSentence: "My basketball coach does not like it if someone is late for practice. I find he is very strict."
       },
+      // NEW sentences — 2 to 4 false cognates visible in the sentence, only ONE is wrong
       {
-        sentence: "During my last trip, I stayed in a small cave under my friend’s house.",
-        falseWord: "cave",
-        correctWord: "basement",
-        correctedSentence: "During my last trip, I stayed in a small basement under my friend’s house."
+        sentence: "My professor asked us to write a phrase explaining the difference between a library and a bookstore.",
+        falseWord: "phrase", correctWord: "sentence",
+        correctedSentence: "My professor asked us to write a sentence explaining the difference between a library and a bookstore."
       },
       {
-        sentence: "The library near my house sells very expensive textbooks.",
-        falseWord: "library",
-        correctWord: "bookstore",
-        correctedSentence: "The bookstore near my house sells very expensive textbooks."
-      }
+        sentence: "The medicine told me to rest for a week and drink plenty of water.",
+        falseWord: "medicine", correctWord: "doctor",
+        correctedSentence: "The doctor told me to rest for a week and drink plenty of water."
+      },
+      {
+        sentence: "My parents and all my relatives were at the vacancy with me. It was a lovely trip.",
+        falseWord: "vacancy", correctWord: "vacation",
+        correctedSentence: "My parents and all my relatives were at the vacation with me. It was a lovely trip."
+      },
+      {
+        sentence: "During the play, one of the comedians forgot his lines and had to improvise.",
+        falseWord: "comedians", correctWord: "actors",
+        correctedSentence: "During the play, one of the actors forgot his lines and had to improvise."
+      },
+      {
+        sentence: "She is a very sensible person, which means she cries whenever someone is severe with her.",
+        falseWord: "sensible", correctWord: "sensitive",
+        correctedSentence: "She is a very sensitive person, which means she cries whenever someone is severe with her."
+      },
+      {
+        sentence: "My conductor missed the bus, so he had to demand a ride from a relative.",
+        falseWord: "conductor", correctWord: "driver",
+        correctedSentence: "My driver missed the bus, so he had to demand a ride from a relative."
+      },
+      {
+        sentence: "I went to the library to buy some new furniture for my home office.",
+        falseWord: "library", correctWord: "bookstore",
+        correctedSentence: "I went to the bookstore to buy some new furniture for my home office."
+      },
+      {
+        sentence: "The temperature was terrible during our vacancy, but the relatives all had a great time.",
+        falseWord: "temperature", correctWord: "weather",
+        correctedSentence: "The weather was terrible during our vacancy, but the relatives all had a great time."
+      },
+      {
+        sentence: "After the piece ended, the audience gave the comedians a standing ovation.",
+        falseWord: "comedians", correctWord: "actors",
+        correctedSentence: "After the piece ended, the audience gave the actors a standing ovation."
+      },
+      {
+        sentence: "He is a very gentle professor who never raises his voice at students.",
+        falseWord: "gentle", correctWord: "kind",
+        correctedSentence: "He is a very kind professor who never raises his voice at students."
+      },
+      {
+        sentence: "I had to command a new pencil online because the library was out of stock.",
+        falseWord: "command", correctWord: "order",
+        correctedSentence: "I had to order a new pencil online because the library was out of stock."
+      },
+      {
+        sentence: "She took a rest in Montreal for the whole summer and visited relatives every weekend.",
+        falseWord: "rest", correctWord: "stay",
+        correctedSentence: "She took a stay in Montreal for the whole summer and visited relatives every weekend."
+      },
+      {
+        sentence: "The photograph at the family reunion took notes of everyone's names for the album.",
+        falseWord: "notes", correctWord: "records",
+        correctedSentence: "The photograph at the family reunion took records of everyone's names for the album."
+      },
+      {
+        sentence: "The conductor checked his notes before demanding everyone to board the train.",
+        falseWord: "demanding", correctWord: "asking",
+        correctedSentence: "The conductor checked his notes before asking everyone to board the train."
+      },
     ];
 
     let currentIndex = -1;
+    let answered = false;
+    let scoreCorrect = 0;
+    let scoreWrong = 0;
+    let scoreTotal = 0;
+    let usedIndices = [];
+
+    function updateScore() {
+      document.getElementById("scoreCorrect").textContent = scoreCorrect;
+      document.getElementById("scoreWrong").textContent   = scoreWrong;
+      document.getElementById("scoreTotal").textContent   = scoreTotal;
+
+      const pct = Math.min(100, Math.round((usedIndices.length / items.length) * 100));
+      document.getElementById("progressFill").style.width = pct + "%";
+    }
+
+    function highlightFalseWord(sentence, falseWord) {
+      // Case-insensitive highlight of the first occurrence
+      const regex = new RegExp(`(${falseWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "i");
+      return sentence.replace(regex, `<span class="highlight">$1</span>`);
+    }
 
     function pickRandomItem() {
-      const newIndex = Math.floor(Math.random() * items.length);
-      currentIndex = newIndex;
+      if (usedIndices.length === items.length) usedIndices = [];
+      let idx;
+      do { idx = Math.floor(Math.random() * items.length); }
+      while (usedIndices.includes(idx));
+      usedIndices.push(idx);
+      currentIndex = idx;
+
       const item = items[currentIndex];
-      document.getElementById("sentence").textContent = item.sentence;
+      answered = false;
+
+      document.getElementById("qNum").textContent = `Question ${usedIndices.length} / ${items.length}`;
+      document.getElementById("sentence").innerHTML = highlightFalseWord(item.sentence, item.falseWord);
       document.getElementById("userInput").value = "";
+      document.getElementById("userInput").className = "";
       document.getElementById("feedback").textContent = "";
       document.getElementById("feedback").className = "";
       document.getElementById("answerBlock").style.display = "none";
+
+      document.getElementById("card").classList.add("pop");
+      setTimeout(() => document.getElementById("card").classList.remove("pop"), 300);
+
+      updateScore();
     }
 
-    function normalise(str) {
-      return str.trim().toLowerCase();
-    }
+    function normalise(str) { return str.trim().toLowerCase(); }
 
     function checkAnswer() {
-      if (currentIndex < 0) return;
+      if (currentIndex < 0 || answered) return;
       const user = normalise(document.getElementById("userInput").value);
       const correct = normalise(items[currentIndex].correctWord);
       const feedback = document.getElementById("feedback");
+      const input = document.getElementById("userInput");
 
       if (!user) {
-        feedback.textContent = "Type your correction first.";
-        feedback.className = "incorrect";
+        feedback.textContent = "✏️ Please type your answer first.";
+        feedback.className = "fb-wrong";
         return;
       }
 
+      scoreTotal++;
+      answered = true;
+
       if (user === correct) {
-        feedback.textContent = "Correct! Good job.";
-        feedback.className = "correct";
+        scoreCorrect++;
+        feedback.textContent = "✅ Correct! Well done.";
+        feedback.className = "fb-correct";
+        input.classList.add("correct-input");
+        spawnConfetti();
       } else {
-        feedback.textContent = "Not quite. Try again or show the solution.";
-        feedback.className = "incorrect";
+        scoreWrong++;
+        feedback.textContent = `❌ Not quite — the false cognate was "${items[currentIndex].falseWord}".`;
+        feedback.className = "fb-wrong";
+        input.classList.add("wrong-input");
+        document.getElementById("card").classList.add("shake");
+        setTimeout(() => document.getElementById("card").classList.remove("shake"), 350);
+        showSolution();
       }
+      updateScore();
     }
 
     function showSolution() {
@@ -361,16 +587,29 @@
       document.getElementById("answerBlock").style.display = "block";
     }
 
-    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
-    document.getElementById("showBtn").addEventListener("click", showSolution);
-    document.getElementById("newBtn").addEventListener("click", pickRandomItem);
-    document.getElementById("userInput").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        checkAnswer();
+    function spawnConfetti() {
+      const wrapper = document.createElement("div");
+      wrapper.className = "confetti-wrapper";
+      const colors = ["#38bdf8","#818cf8","#34d399","#fbbf24","#f472b6"];
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.className = "confetti-piece";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 30 + "vh";
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDelay = Math.random() * 0.5 + "s";
+        p.style.transform = `rotate(${Math.random()*360}deg)`;
+        wrapper.appendChild(p);
       }
-    });
+      document.body.appendChild(wrapper);
+      setTimeout(() => wrapper.remove(), 1500);
+    }
 
-    // Initial sentence when the page loads
+    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+    document.getElementById("showBtn").addEventListener("click", () => { answered = true; showSolution(); });
+    document.getElementById("newBtn").addEventListener("click", pickRandomItem);
+    document.getElementById("userInput").addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(); });
+
     pickRandomItem();
   </script>
 </body>
