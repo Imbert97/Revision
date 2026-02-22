@@ -502,10 +502,6 @@
       updateScore();
     }
 
-    function normalise(str) {
-      return str.trim().toLowerCase().replace(/ed$/, "").replace(/s$/, "");
-    }
-
     function checkAnswer() {
       if (currentIndex < 0 || answered) return;
       const userRaw  = document.getElementById("userInput").value;
@@ -513,19 +509,23 @@
       const correct  = normalise(items[currentIndex].correctWord);
       const feedback = document.getElementById("feedback");
       const input    = document.getElementById("userInput");
+    
       if (!userRaw.trim()) {
         feedback.textContent = "✏️ Please type your answer first.";
         feedback.className = "fb-wrong";
         return;
       }
+    
       scoreTotal++;
       answered = true;
+    
       if (user === correct) {
         scoreCorrect++;
         feedback.textContent = "✅ Correct! Well done.";
         feedback.className = "fb-correct";
         input.classList.add("correct-input");
         spawnConfetti();
+        showSolution(); // ← ajout ici
       } else {
         scoreWrong++;
         feedback.textContent = `❌ Not quite. The false cognate was "${items[currentIndex].falseWord}".`;
@@ -537,6 +537,7 @@
       }
       updateScore();
     }
+
 
     function showSolution() {
       if (currentIndex < 0) return;
