@@ -19,28 +19,12 @@
       color: #f1f5f9;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #93c5fd;
-    }
-
-    header p {
-      font-size: 0.88rem;
-      color: #94a3b8;
-      margin-top: 0.3rem;
-      max-width: 480px;
-    }
+    header { text-align: center; margin-bottom: 1.5rem; }
+    header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; color: #93c5fd; }
+    header p { font-size: 0.88rem; color: #94a3b8; margin-top: 0.3rem; max-width: 480px; }
 
     .scorebar {
-      display: flex;
-      gap: 1.5rem;
+      display: flex; gap: 1.5rem;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 999px;
@@ -48,73 +32,49 @@
       margin-bottom: 1.5rem;
       font-size: 0.9rem;
     }
-
     .scorebar span { color: #cbd5e1; }
     .scorebar strong { color: #38bdf8; }
 
     .progress-wrap {
-      width: 100%;
-      max-width: 640px;
+      width: 100%; max-width: 640px;
       background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      height: 6px;
-      margin-bottom: 1.2rem;
-      overflow: hidden;
+      border-radius: 999px; height: 6px;
+      margin-bottom: 1.2rem; overflow: hidden;
     }
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, #38bdf8, #818cf8);
       border-radius: 999px;
-      transition: width 0.4s ease;
-      width: 0%;
+      transition: width 0.4s ease; width: 0%;
     }
 
     .card {
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 1.8rem;
-      width: 100%;
-      max-width: 640px;
+      border-radius: 20px; padding: 1.8rem;
+      width: 100%; max-width: 640px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-      transition: transform 0.2s;
     }
 
     .question-num {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #64748b;
-      margin-bottom: 0.6rem;
+      font-size: 0.78rem; text-transform: uppercase;
+      letter-spacing: 1px; color: #64748b; margin-bottom: 0.6rem;
     }
 
     #sentence {
-      font-size: 1.15rem;
-      line-height: 1.8;
-      color: #e2e8f0;
-      min-height: 3.5rem;
-      margin-bottom: 1.4rem;
+      font-size: 1.15rem; line-height: 1.8;
+      color: #e2e8f0; min-height: 3.5rem; margin-bottom: 1.4rem;
     }
 
-    .input-row {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
+    .input-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
 
     input[type="text"] {
-      flex: 1;
-      padding: 0.65rem 1rem;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: 1.5px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.07);
-      color: #f1f5f9;
-      outline: none;
+      flex: 1; padding: 0.65rem 1rem; font-size: 1rem;
+      border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07); color: #f1f5f9; outline: none;
       transition: border 0.2s;
     }
-
     input[type="text"]::placeholder { color: #475569; }
     input[type="text"]:focus { border-color: #38bdf8; }
     input.correct-input { border-color: #22c55e !important; }
@@ -123,70 +83,61 @@
     .buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
     button {
-      flex: 1 1 120px;
-      padding: 0.65rem 1rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
+      flex: 1 1 120px; padding: 0.65rem 1rem;
+      font-size: 0.95rem; font-weight: 600;
+      border-radius: 12px; border: none; cursor: pointer;
       transition: opacity 0.15s, transform 0.1s;
     }
-
     button:active { opacity: 0.8; transform: scale(0.97); }
-
     .btn-check  { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }
     .btn-reveal { background: rgba(255,255,255,0.08); color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
     .btn-next   { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; }
 
-    #feedback {
-      margin-top: 1rem;
-      min-height: 1.4rem;
-      font-size: 0.97rem;
-      font-weight: 500;
-    }
-
+    #feedback { margin-top: 1rem; min-height: 1.4rem; font-size: 0.97rem; font-weight: 500; }
     .fb-correct { color: #4ade80; }
     .fb-wrong   { color: #f87171; }
 
     #answerBlock {
-      display: none;
-      margin-top: 1rem;
-      padding: 0.9rem 1rem;
+      display: none; margin-top: 1rem;
+      padding: 1rem 1.1rem;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      font-size: 0.93rem;
-      line-height: 1.7;
-      color: #cbd5e1;
+      border-radius: 12px; font-size: 0.93rem;
+      line-height: 1.7; color: #cbd5e1;
     }
+    .ans-label {
+      color: #64748b; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-top: 0.75rem;
+    }
+    .ans-label:first-child { margin-top: 0; }
+    .ans-word  { color: #34d399; font-weight: 700; font-size: 1.05rem; }
+    .ans-wrong { color: #f87171; }
+    .ans-ok    { color: #94a3b8; }
+    .ans-sent  { color: #e2e8f0; font-style: italic; }
 
-    #answerBlock .ans-label {
-      color: #64748b;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+    /* Explanation box */
+    .ans-explanation {
       margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(56, 189, 248, 0.07);
+      border-left: 3px solid #38bdf8;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      color: #bae6fd;
+      line-height: 1.6;
     }
-    #answerBlock .ans-label:first-child { margin-top: 0; }
-    #answerBlock .ans-word  { color: #34d399; font-weight: 700; font-size: 1.05rem; }
-    #answerBlock .ans-wrong { color: #f87171; }
-    #answerBlock .ans-ok    { color: #94a3b8; }
-    #answerBlock .ans-sent  { color: #e2e8f0; font-style: italic; margin-top: 0.2rem; }
+    .ans-explanation .wrong-def  { color: #fca5a5; font-weight: 600; }
+    .ans-explanation .right-def  { color: #6ee7b7; font-weight: 600; }
 
-    .hint {
-      margin-top: 1rem;
-      font-size: 0.82rem;
-      color: #475569;
-      text-align: center;
-    }
+    .hint { margin-top: 1rem; font-size: 0.82rem; color: #475569; text-align: center; }
 
     @keyframes shake {
       0%,100% { transform: translateX(0); }
-      20%      { transform: translateX(-6px); }
-      40%      { transform: translateX(6px); }
-      60%      { transform: translateX(-4px); }
-      80%      { transform: translateX(4px); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
     }
     .shake { animation: shake 0.35s ease; }
 
@@ -202,18 +153,13 @@
       100% { transform: translateY(90px) rotate(360deg); opacity: 0; }
     }
     .confetti-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      z-index: 999;
+      pointer-events: none; position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden; z-index: 999;
     }
     .confetti-piece {
-      position: absolute;
-      width: 8px; height: 14px;
-      border-radius: 2px;
-      animation: confetti-drop 1s ease forwards;
+      position: absolute; width: 8px; height: 14px;
+      border-radius: 2px; animation: confetti-drop 1s ease forwards;
     }
   </style>
 </head>
@@ -259,250 +205,244 @@
       <div id="ansOk" class="ans-ok"></div>
       <div class="ans-label">Corrected sentence</div>
       <div class="ans-sent" id="correctSentence"></div>
+      <div class="ans-label">💡 Why?</div>
+      <div class="ans-explanation" id="ansExplanation"></div>
     </div>
 
     <div class="hint">💡 All three words look like French — but only one is misused. Read carefully.</div>
   </div>
 
   <script>
-    // Each item has:
-    //   sentence         : sentence with 3 false-cognate-like words, one misused
-    //   falseWord        : the ONE word used incorrectly
-    //   correctWord      : what it should be
-    //   otherTwo         : the two other false-cognate words that ARE used correctly
-    //   correctedSentence: the fixed version
     const items = [
       {
-        sentence: "My professor told me to stay after class and write a phrase about the difference between a library and a bookstore.",
-        falseWord: "phrase",
-        correctWord: "sentence",
+        sentence: "My professor told me to write a phrase explaining what makes a library different from a bookstore.",
+        falseWord: "phrase", correctWord: "sentence",
         otherTwo: ["professor", "library"],
-        correctedSentence: "My professor told me to stay after class and write a sentence about the difference between a library and a bookstore."
+        correctedSentence: "My professor told me to write a sentence explaining what makes a library different from a bookstore.",
+        explanation: "<span class='wrong-def'>\"Phrase\"</span> means a group of words without a subject or verb (e.g. \"in the morning\"). When you write a complete thought with a subject and verb, ending with a period, that is a <span class='right-def'>\"sentence\"</span>."
       },
       {
-        sentence: "The conductor asked every passenger to stay calm and not to cry during the delay.",
-        falseWord: "cry",
-        correctWord: "scream",
+        sentence: "The conductor asked his relative to stay home because the temperature outside was dangerous.",
+        falseWord: "temperature", correctWord: "weather",
         otherTwo: ["conductor", "stay"],
-        correctedSentence: "The conductor asked every passenger to stay calm and not to scream during the delay."
+        correctedSentence: "The conductor asked his relative to stay home because the weather outside was dangerous.",
+        explanation: "<span class='wrong-def'>\"Temperature\"</span> refers only to a degree of heat or cold on a scale (e.g. 30°C). When talking about rain, wind, storms or general outdoor conditions, the correct word is <span class='right-def'>\"weather\"</span>."
       },
       {
-        sentence: "My relatives bought their furniture at the bookstore near the university library.",
-        falseWord: "furniture",
-        correctWord: "supplies",
-        otherTwo: ["relatives", "library"],
-        correctedSentence: "My relatives bought their supplies at the bookstore near the university library."
+        sentence: "The photographer used a crayon to label her supplies before the shoot.",
+        falseWord: "crayon", correctWord: "pencil",
+        otherTwo: ["photographer", "supplies"],
+        correctedSentence: "The photographer used a pencil to label her supplies before the shoot.",
+        explanation: "<span class='wrong-def'>\"Crayon\"</span> is a waxy colouring stick used by children to draw. To write or label something, you need a <span class='right-def'>\"pencil\"</span>, which is a writing instrument with a graphite tip."
       },
       {
-        sentence: "The photographer used a crayon to label all the pictures from our family vacation.",
-        falseWord: "crayon",
-        correctWord: "pencil",
-        otherTwo: ["photographer", "vacation"],
-        correctedSentence: "The photographer used a pencil to label all the pictures from our family vacation."
+        sentence: "My relative bought all his furniture at the library across the street.",
+        falseWord: "library", correctWord: "bookstore",
+        otherTwo: ["relative", "furniture"],
+        correctedSentence: "My relative bought all his furniture at the bookstore across the street.",
+        explanation: "<span class='wrong-def'>\"Library\"</span> is a place where you borrow books for free with a membership card — you cannot buy anything there. A <span class='right-def'>\"bookstore\"</span> is a store where books and supplies are sold."
       },
       {
-        sentence: "It is difficult to get good marks without a doctor who gives you strict notes on your work.",
-        falseWord: "notes",
-        correctWord: "feedback",
-        otherTwo: ["marks", "doctor"],
-        correctedSentence: "It is difficult to get good marks without a doctor who gives you strict feedback on your work."
+        sentence: "The actor forgot his phrase and began to cry on stage during the play.",
+        falseWord: "cry", correctWord: "scream",
+        otherTwo: ["actor", "play"],
+        correctedSentence: "The actor forgot his phrase and began to scream on stage during the play.",
+        explanation: "<span class='wrong-def'>\"Cry\"</span> means to shed tears because you are sad. To raise your voice loudly at someone or in frustration, the correct word is <span class='right-def'>\"scream\"</span>."
       },
       {
-        sentence: "My relatives demanded a vacation in a warm place, but the weather was still terrible.",
-        falseWord: "demanded",
-        correctWord: "requested",
-        otherTwo: ["relatives", "weather"],
-        correctedSentence: "My relatives requested a vacation in a warm place, but the weather was still terrible."
+        sentence: "The comedian needed a doctor because he hurt his figure during rehearsal.",
+        falseWord: "figure", correctWord: "face",
+        otherTwo: ["comedian", "doctor"],
+        correctedSentence: "The comedian needed a doctor because he hurt his face during rehearsal.",
+        explanation: "<span class='wrong-def'>\"Figure\"</span> refers to the shape or form of a person's entire body. The part of your head that includes your eyes, nose and mouth is your <span class='right-def'>\"face\"</span>."
       },
       {
-        sentence: "The photographer told the child to stay still while he checked the temperature outside.",
-        falseWord: "temperature",
-        correctWord: "weather",
-        otherTwo: ["photographer", "child"],
-        correctedSentence: "The photographer told the child to stay still while he checked the weather outside."
+        sentence: "My professor is very fine — she never gives severe punishments to her students.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["professor", "severe"],
+        correctedSentence: "My professor is very kind — she never gives severe punishments to her students.",
+        explanation: "<span class='wrong-def'>\"Fine\"</span> as an adjective means \"very well\" or \"all right\" (e.g. \"I'm fine\"). To describe someone who is helpful and caring, use <span class='right-def'>\"kind\"</span>."
       },
       {
-        sentence: "The actor forgot his phrases and had to improvise in front of the strict director.",
-        falseWord: "phrases",
-        correctWord: "lines",
-        otherTwo: ["actor", "strict"],
-        correctedSentence: "The actor forgot his lines and had to improvise in front of the strict director."
+        sentence: "During the vacancy, the infant stayed in the basement with his parents every evening.",
+        falseWord: "vacancy", correctWord: "vacation",
+        otherTwo: ["infant", "basement"],
+        correctedSentence: "During the vacation, the infant stayed in the basement with his parents every evening.",
+        explanation: "<span class='wrong-def'>\"Vacancy\"</span> means an empty space or unoccupied position (e.g. a job vacancy). A period of travel or time off from work is a <span class='right-def'>\"vacation\"</span>."
       },
       {
-        sentence: "During our vacation, a kind relative demanded that we stay in her basement instead of a hotel.",
-        falseWord: "demanded",
-        correctWord: "insisted",
-        otherTwo: ["vacation", "basement"],
-        correctedSentence: "During our vacation, a kind relative insisted that we stay in her basement instead of a hotel."
+        sentence: "The sensible child began to cry when the strict teacher gave her a low mark.",
+        falseWord: "sensible", correctWord: "sensitive",
+        otherTwo: ["strict", "mark"],
+        correctedSentence: "The sensitive child began to cry when the strict teacher gave her a low mark.",
+        explanation: "<span class='wrong-def'>\"Sensible\"</span> means having good judgment and being wise. A child who cries easily and is emotionally delicate is <span class='right-def'>\"sensitive\"</span>."
       },
       {
-        sentence: "My child asked if she could borrow a crayon from her relative to finish her drawing.",
-        falseWord: "crayon",
-        correctWord: "pencil",
-        otherTwo: ["child", "relative"],
-        correctedSentence: "My child asked if she could borrow a pencil from her relative to finish her drawing."
+        sentence: "My relative is a comedian who actually stays in a cave when he travels for shows.",
+        falseWord: "cave", correctWord: "basement",
+        otherTwo: ["comedian", "actually"],
+        correctedSentence: "My relative is a comedian who actually stays in a basement when he travels for shows.",
+        explanation: "<span class='wrong-def'>\"Cave\"</span> is a natural hole in the earth, possibly home to bears or bats. The part of a house below ground level is the <span class='right-def'>\"basement\"</span>."
       },
       {
-        sentence: "The doctor told the sensitive patient to stay home and avoid severe temperature changes.",
-        falseWord: "temperature",
-        correctWord: "weather",
-        otherTwo: ["sensitive", "severe"],
-        correctedSentence: "The doctor told the sensitive patient to stay home and avoid severe weather changes."
-      },
-      {
-        sentence: "The strict professor gave the child a note explaining why she missed her marks.",
-        falseWord: "note",
-        correctWord: "message",
-        otherTwo: ["strict", "marks"],
-        correctedSentence: "The strict professor gave the child a message explaining why she missed her marks."
-      },
-      {
-        sentence: "She is too sensible — she cried when the severe conductor asked her to move seats.",
-        falseWord: "sensible",
-        correctWord: "sensitive",
-        otherTwo: ["severe", "conductor"],
-        correctedSentence: "She is too sensitive — she cried when the severe conductor asked her to move seats."
-      },
-      {
-        sentence: "The actor needed a kind doctor after he hurt himself during the piece rehearsal.",
-        falseWord: "piece",
-        correctWord: "play",
-        otherTwo: ["actor", "doctor"],
-        correctedSentence: "The actor needed a kind doctor after he hurt himself during the play rehearsal."
-      },
-      {
-        sentence: "The photographer found a cave under the old house while shooting a piece about local history.",
-        falseWord: "cave",
-        correctWord: "basement",
-        otherTwo: ["photographer", "piece"],
-        correctedSentence: "The photographer found a basement under the old house while shooting a piece about local history."
-      },
-      {
-        sentence: "My relative works with dangerous mechanics in a factory and always stays strict about safety.",
-        falseWord: "mechanics",
-        correctWord: "machinery",
-        otherTwo: ["relative", "strict"],
-        correctedSentence: "My relative works with dangerous machinery in a factory and always stays strict about safety."
-      },
-      {
-        sentence: "The comedian gave a kind note to the director after the severe rehearsal last night.",
-        falseWord: "comedian",
-        correctWord: "actor",
-        otherTwo: ["kind", "severe"],
-        correctedSentence: "The actor gave a kind note to the director after the severe rehearsal last night."
-      },
-      {
-        sentence: "After the vacancy, my relatives got strict marks on their school assignments.",
-        falseWord: "vacancy",
-        correctWord: "vacation",
-        otherTwo: ["relatives", "marks"],
-        correctedSentence: "After the vacation, my relatives got strict marks on their school assignments."
+        sentence: "She demanded the conductor why the driver was going so fast.",
+        falseWord: "demanded", correctWord: "asked",
+        otherTwo: ["conductor", "driver"],
+        correctedSentence: "She asked the conductor why the driver was going so fast.",
+        explanation: "<span class='wrong-def'>\"Demand\"</span> means to request something forcefully or seriously. To pose a polite question to someone, use <span class='right-def'>\"ask\"</span>."
       },
       {
         sentence: "The doctor told the infant to rest and take his medicine twice a day.",
-        falseWord: "infant",
-        correctWord: "child",
+        falseWord: "rest", correctWord: "stay",
         otherTwo: ["doctor", "medicine"],
-        correctedSentence: "The doctor told the child to rest and take his medicine twice a day."
+        correctedSentence: "The doctor told the infant to stay home and take his medicine twice a day.",
+        explanation: "<span class='wrong-def'>\"Rest\"</span> means to stop for a moment and take a break. To live in or remain at a place, the correct word is <span class='right-def'>\"stay\"</span>."
       },
       {
-        sentence: "My relative is a very fine teacher who never gives severe punishments to her students.",
-        falseWord: "fine",
-        correctWord: "kind",
-        otherTwo: ["relative", "severe"],
-        correctedSentence: "My relative is a very kind teacher who never gives severe punishments to her students."
+        sentence: "My relative works with dangerous mechanics in a factory and is currently looking for a new job.",
+        falseWord: "mechanics", correctWord: "machinery",
+        otherTwo: ["relative", "currently"],
+        correctedSentence: "My relative works with dangerous machinery in a factory and is currently looking for a new job.",
+        explanation: "<span class='wrong-def'>\"Mechanic\"</span> refers to a person who repairs engines. The dangerous equipment and machines in a factory are called <span class='right-def'>\"machinery\"</span>."
       },
       {
-        sentence: "The professor marked the phrase as incorrect and asked the student to rewrite it.",
-        falseWord: "phrase",
-        correctWord: "sentence",
-        otherTwo: ["professor", "marked"],
-        correctedSentence: "The professor marked the sentence as incorrect and asked the student to rewrite it."
+        sentence: "The photograph took a note of everyone's name at the family reunion.",
+        falseWord: "photograph", correctWord: "photographer",
+        otherTwo: ["note", "relative"],
+        correctedSentence: "The photographer took a note of everyone's name at the family reunion.",
+        explanation: "<span class='wrong-def'>\"Photograph\"</span> is a picture (a noun referring to an image). The person who takes pictures is a <span class='right-def'>\"photographer\"</span>."
       },
       {
-        sentence: "She stayed calm when the strict conductor demanded to check her ticket at the door.",
-        falseWord: "demanded",
-        correctWord: "asked",
-        otherTwo: ["strict", "conductor"],
-        correctedSentence: "She stayed calm when the strict conductor asked to check her ticket at the door."
+        sentence: "She is a sympathetic teacher who gives good marks and stays after class to help.",
+        falseWord: "sympathetic", correctWord: "nice",
+        otherTwo: ["marks", "stay"],
+        correctedSentence: "She is a nice teacher who gives good marks and stays after class to help.",
+        explanation: "<span class='wrong-def'>\"Sympathetic\"</span> in English means sensitive to other people's emotions — it does not mean pleasant or agreeable. A teacher who is pleasant and helpful is described as <span class='right-def'>\"nice\"</span>."
       },
       {
-        sentence: "The photographer took some excellent pictures of the cave under the old basement stairs.",
-        falseWord: "cave",
-        correctWord: "room",
+        sentence: "The comedian was sympathetic and always gentle with children in the audience.",
+        falseWord: "gentle", correctWord: "nice",
+        otherTwo: ["comedian", "sympathetic"],
+        correctedSentence: "The comedian was sympathetic and always nice with children in the audience.",
+        explanation: "<span class='wrong-def'>\"Gentle\"</span> means soft or delicate (e.g. a gentle touch). To say someone is polite and pleasant to others, use <span class='right-def'>\"nice\"</span>."
+      },
+      {
+        sentence: "I need to command a pencil from the bookstore before my exam next week.",
+        falseWord: "command", correctWord: "order",
+        otherTwo: ["pencil", "bookstore"],
+        correctedSentence: "I need to order a pencil from the bookstore before my exam next week.",
+        explanation: "<span class='wrong-def'>\"Command\"</span> means to officially tell someone to do something (a military or authority context). To request goods from a business, the correct word is <span class='right-def'>\"order\"</span>."
+      },
+      {
+        sentence: "My teacher was severe when I forgot my supplies at home during our vacation.",
+        falseWord: "severe", correctWord: "strict",
+        otherTwo: ["teacher", "supplies"],
+        correctedSentence: "My teacher was strict when I forgot my supplies at home during our vacation.",
+        explanation: "<span class='wrong-def'>\"Severe\"</span> means intense or violent (e.g. a severe storm). A teacher who enforces rules firmly and has high discipline is <span class='right-def'>\"strict\"</span>."
+      },
+      {
+        sentence: "The actor checked his note and actually stayed calm before the play.",
+        falseWord: "actually", correctWord: "currently",
+        otherTwo: ["actor", "play"],
+        correctedSentence: "The actor checked his note and is currently staying calm before the play.",
+        explanation: "<span class='wrong-def'>\"Actually\"</span> means \"in fact\" and is used to correct or emphasize information. To say something is happening right now, at this moment, use <span class='right-def'>\"currently\"</span>."
+      },
+      {
+        sentence: "The professor gave each relative a note explaining the low marks on the exam.",
+        falseWord: "relative", correctWord: "student",
+        otherTwo: ["professor", "marks"],
+        correctedSentence: "The professor gave each student a note explaining the low marks on the exam.",
+        explanation: "<span class='wrong-def'>\"Relative\"</span> means anyone in your family (aunt, uncle, cousin, etc.). The people in a class who receive grades are <span class='right-def'>\"students\"</span>."
+      },
+      {
+        sentence: "The comedian stayed in a cave while his actor friend rested in a proper hotel.",
+        falseWord: "cave", correctWord: "basement",
+        otherTwo: ["comedian", "actor"],
+        correctedSentence: "The comedian stayed in a basement while his actor friend rested in a proper hotel.",
+        explanation: "<span class='wrong-def'>\"Cave\"</span> is a natural hole in the earth. The underground level of a building or house is the <span class='right-def'>\"basement\"</span>."
+      },
+      {
+        sentence: "During my vacancy, I saw a piece at a beautiful theatre downtown.",
+        falseWord: "vacancy", correctWord: "vacation",
+        otherTwo: ["piece", "theatre"],
+        correctedSentence: "During my vacation, I saw a piece at a beautiful theatre downtown.",
+        explanation: "<span class='wrong-def'>\"Vacancy\"</span> refers to an empty space or available position, not a period of leisure. Time spent away from home for travel and recreation is a <span class='right-def'>\"vacation\"</span>."
+      },
+      {
+        sentence: "My professor is actually very fine — she explains every sentence clearly.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["professor", "sentence"],
+        correctedSentence: "My professor is actually very kind — she explains every sentence clearly.",
+        explanation: "<span class='wrong-def'>\"Fine\"</span> means \"okay\" or \"all right\" (e.g. \"I'm fine, thank you\"). To describe someone who is helpful and caring by nature, use <span class='right-def'>\"kind\"</span>."
+      },
+      {
+        sentence: "The sensible infant cried when the conductor screamed at the passengers.",
+        falseWord: "sensible", correctWord: "sensitive",
+        otherTwo: ["infant", "conductor"],
+        correctedSentence: "The sensitive infant cried when the conductor screamed at the passengers.",
+        explanation: "<span class='wrong-def'>\"Sensible\"</span> means wise and having good judgment. An infant who cries easily and is emotionally delicate is <span class='right-def'>\"sensitive\"</span>."
+      },
+      {
+        sentence: "My relative demanded the doctor why the medicine was so expensive.",
+        falseWord: "demanded", correctWord: "asked",
+        otherTwo: ["relative", "doctor"],
+        correctedSentence: "My relative asked the doctor why the medicine was so expensive.",
+        explanation: "<span class='wrong-def'>\"Demand\"</span> is used for forceful or authoritative requests. To pose a question politely to someone, the correct word is <span class='right-def'>\"ask\"</span>."
+      },
+      {
+        sentence: "The photographer stayed in the cave below the old house during the severe storm.",
+        falseWord: "cave", correctWord: "basement",
+        otherTwo: ["photographer", "severe"],
+        correctedSentence: "The photographer stayed in the basement below the old house during the severe storm.",
+        explanation: "<span class='wrong-def'>\"Cave\"</span> is a natural underground space found in rock or earth, not part of a house. The underground level of a house is the <span class='right-def'>\"basement\"</span>."
+      },
+      {
+        sentence: "My teacher commanded a new set of supplies and a crayon from the catalogue.",
+        falseWord: "commanded", correctWord: "ordered",
+        otherTwo: ["teacher", "crayon"],
+        correctedSentence: "My teacher ordered a new set of supplies and a crayon from the catalogue.",
+        explanation: "<span class='wrong-def'>\"Command\"</span> means to give an official instruction or directive. When requesting goods from a business or catalogue, the correct word is <span class='right-def'>\"order\"</span>."
+      },
+      {
+        sentence: "She is a fine doctor who gives gentle care to every infant in the clinic.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["doctor", "infant"],
+        correctedSentence: "She is a kind doctor who gives gentle care to every infant in the clinic.",
+        explanation: "<span class='wrong-def'>\"Fine\"</span> means \"all right\" or \"okay\", not caring or helpful. To describe someone who is generous and helpful by nature, use <span class='right-def'>\"kind\"</span>."
+      },
+      {
+        sentence: "The comedian cried at the audience when he forgot his sentence on stage.",
+        falseWord: "cried", correctWord: "screamed",
+        otherTwo: ["comedian", "sentence"],
+        correctedSentence: "The comedian screamed at the audience when he forgot his sentence on stage.",
+        explanation: "<span class='wrong-def'>\"Cry\"</span> means to shed tears out of sadness. To raise your voice loudly and angrily at someone, the correct word is <span class='right-def'>\"scream\"</span>."
+      },
+      {
+        sentence: "My relative works with dangerous mechanics and currently lives near a library.",
+        falseWord: "library", correctWord: "bookstore",
+        otherTwo: ["relative", "currently"],
+        correctedSentence: "My relative works with dangerous mechanics and currently lives near a bookstore.",
+        explanation: "<span class='wrong-def'>\"Library\"</span> is a place to borrow books for free — you cannot buy things there. A place that sells books and other supplies is a <span class='right-def'>\"bookstore\"</span>."
+      },
+      {
+        sentence: "The photographer took pictures of the figure on the wall and the child in the basement.",
+        falseWord: "figure", correctWord: "face",
         otherTwo: ["photographer", "basement"],
-        correctedSentence: "The photographer took some excellent pictures of the room under the old basement stairs."
+        correctedSentence: "The photographer took pictures of the face on the wall and the child in the basement.",
+        explanation: "<span class='wrong-def'>\"Figure\"</span> refers to the shape or form of someone's whole body. The part of the head with the eyes, nose and mouth is the <span class='right-def'>\"face\"</span>."
       },
       {
-        sentence: "I borrow a crayon from my relative every time I forget mine at the library.",
-        falseWord: "library",
-        correctWord: "bookstore",
-        otherTwo: ["crayon", "relative"],
-        correctedSentence: "I borrow a crayon from my relative every time I forget mine at the bookstore."
-      },
-      {
-        sentence: "The actor rehearsed his phrases in the cave below the theatre every evening.",
-        falseWord: "phrases",
-        correctWord: "lines",
-        otherTwo: ["actor", "cave"],
-        correctedSentence: "The actor rehearsed his lines in the cave below the theatre every evening."
-      },
-      {
-        sentence: "After the vacancy, the strict teacher gave a note to each student about their progress.",
-        falseWord: "vacancy",
-        correctWord: "vacation",
-        otherTwo: ["strict", "note"],
-        correctedSentence: "After the vacation, the strict teacher gave a note to each student about their progress."
-      },
-      {
-        sentence: "My relatives seem very sympathetic because they always stay with you during hard times.",
-        falseWord: "sympathetic",
-        correctWord: "supportive",
-        otherTwo: ["relatives", "stay"],
-        correctedSentence: "My relatives seem very supportive because they always stay with you during hard times."
-      },
-      {
-        sentence: "The comedian bought new furniture at the bookstore before the semester started.",
-        falseWord: "furniture",
-        correctWord: "supplies",
-        otherTwo: ["comedian", "bookstore"],
-        correctedSentence: "The comedian bought new supplies at the bookstore before the semester started."
-      },
-      {
-        sentence: "My doctor is very sensible and always explains the medicine clearly before prescribing it.",
-        falseWord: "sensible",
-        correctWord: "kind",
-        otherTwo: ["doctor", "medicine"],
-        correctedSentence: "My doctor is very kind and always explains the medicine clearly before prescribing it."
-      },
-      {
-        sentence: "The strict teacher asked every infant to write a phrase about their favourite animal.",
-        falseWord: "infant",
-        correctWord: "child",
-        otherTwo: ["strict", "phrase"],
-        correctedSentence: "The strict teacher asked every child to write a phrase about their favourite animal."
-      },
-      {
-        sentence: "My relative works as a conductor and is actually very severe with late passengers.",
-        falseWord: "severe",
-        correctWord: "strict",
-        otherTwo: ["relative", "conductor"],
-        correctedSentence: "My relative works as a conductor and is actually very strict with late passengers."
-      },
-      {
-        sentence: "The photographer stayed in a cave near the beach during his long vacation abroad.",
-        falseWord: "cave",
-        correctWord: "basement",
-        otherTwo: ["photographer", "vacation"],
-        correctedSentence: "The photographer stayed in a basement near the beach during his long vacation abroad."
+        sentence: "The actor was sympathetic and actually gave a fine performance in the play.",
+        falseWord: "fine", correctWord: "kind",
+        otherTwo: ["actor", "play"],
+        correctedSentence: "The actor was sympathetic and actually gave a kind performance in the play.",
+        explanation: "<span class='wrong-def'>\"Fine\"</span> as an adjective means \"okay\" or \"all right\". To describe a performance or person as generous and warm, use <span class='right-def'>\"kind\"</span>."
       }
     ];
 
     let currentIndex = -1;
     let answered = false;
-    let scoreCorrect = 0;
-    let scoreWrong = 0;
-    let scoreTotal = 0;
+    let scoreCorrect = 0, scoreWrong = 0, scoreTotal = 0;
     let usedIndices = [];
 
     function updateScore() {
@@ -536,16 +476,19 @@
       updateScore();
     }
 
-    function normalise(str) { return str.trim().toLowerCase(); }
+    function normalise(str) {
+      return str.trim().toLowerCase().replace(/ed$/, "").replace(/s$/, "");
+    }
 
     function checkAnswer() {
       if (currentIndex < 0 || answered) return;
-      const user    = normalise(document.getElementById("userInput").value);
-      const correct = normalise(items[currentIndex].correctWord);
+      const userRaw  = document.getElementById("userInput").value;
+      const user     = normalise(userRaw);
+      const correct  = normalise(items[currentIndex].correctWord);
       const feedback = document.getElementById("feedback");
       const input    = document.getElementById("userInput");
 
-      if (!user) {
+      if (!userRaw.trim()) {
         feedback.textContent = "✏️ Please type your answer first.";
         feedback.className = "fb-wrong";
         return;
@@ -574,13 +517,14 @@
 
     function showSolution() {
       if (currentIndex < 0) return;
-      const item = items[currentIndex];
       answered = true;
-      document.getElementById("ansWrong").textContent       = `"${item.falseWord}"`;
-      document.getElementById("correctWord").textContent    = item.correctWord;
-      document.getElementById("ansOk").textContent          = item.otherTwo.map(w => `"${w}"`).join("  &  ");
-      document.getElementById("correctSentence").textContent = item.correctedSentence;
-      document.getElementById("answerBlock").style.display  = "block";
+      const item = items[currentIndex];
+      document.getElementById("ansWrong").textContent         = `"${item.falseWord}"`;
+      document.getElementById("correctWord").textContent      = item.correctWord;
+      document.getElementById("ansOk").textContent            = item.otherTwo.map(w => `"${w}"`).join("  &  ");
+      document.getElementById("correctSentence").textContent  = item.correctedSentence;
+      document.getElementById("ansExplanation").innerHTML     = item.explanation;
+      document.getElementById("answerBlock").style.display    = "block";
     }
 
     function spawnConfetti() {
