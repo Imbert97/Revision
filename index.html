@@ -5,31 +5,48 @@
   <title>False Cognates Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Sora', system-ui, sans-serif;
       min-height: 100vh;
-      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      background: linear-gradient(145deg, #0d1b2a 0%, #1b2838 50%, #0d1b2a 100%);
       display: flex; flex-direction: column;
       align-items: center; justify-content: flex-start;
       padding: 1.5rem 1rem 3rem; color: #f1f5f9;
     }
-    header { text-align: center; margin-bottom: 1.5rem; }
-    header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; color: #93c5fd; }
-    header p { font-size: 0.88rem; color: #94a3b8; margin-top: 0.3rem; max-width: 480px; }
+    header { text-align: center; margin-bottom: 1.2rem; }
+    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: 0.3px; color: #7dd3fc; }
+    header p { font-size: 0.85rem; color: #94a3b8; margin-top: 0.35rem; max-width: 520px; line-height: 1.5; }
+
+    .level-tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 1.2rem;
+    }
+    .level-tab {
+      padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; border: 1.5px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05); color: #94a3b8;
+      transition: all 0.2s;
+    }
+    .level-tab.active {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border-color: transparent; color: #fff;
+    }
+
     .scorebar {
       display: flex; gap: 1.5rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 999px; padding: 0.5rem 1.5rem;
-      margin-bottom: 1.5rem; font-size: 0.9rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px; padding: 0.45rem 1.4rem;
+      margin-bottom: 1.2rem; font-size: 0.88rem;
     }
     .scorebar span { color: #cbd5e1; }
     .scorebar strong { color: #38bdf8; }
     .progress-wrap {
-      width: 100%; max-width: 640px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px; height: 6px;
+      width: 100%; max-width: 660px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 999px; height: 5px;
       margin-bottom: 1.2rem; overflow: hidden;
     }
     .progress-fill {
@@ -37,58 +54,102 @@
       background: linear-gradient(90deg, #38bdf8, #818cf8);
       border-radius: 999px; transition: width 0.4s ease; width: 0%;
     }
+
+    /* MODE TABS */
+    .mode-tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 1.2rem;
+    }
+    .mode-tab {
+      padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; border: 1.5px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05); color: #94a3b8;
+      transition: all 0.2s;
+    }
+    .mode-tab.active {
+      background: linear-gradient(135deg, #0891b2, #0e7490);
+      border-color: transparent; color: #fff;
+    }
+
     .card {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px; padding: 1.8rem;
-      width: 100%; max-width: 640px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 22px; padding: 1.8rem;
+      width: 100%; max-width: 660px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
     .question-num {
-      font-size: 0.78rem; text-transform: uppercase;
-      letter-spacing: 1px; color: #64748b; margin-bottom: 0.6rem;
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 1.2px; color: #475569; margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
     }
     #sentence {
-      font-size: 1.15rem; line-height: 1.8;
+      font-size: 1.12rem; line-height: 1.85;
       color: #e2e8f0; min-height: 3.5rem; margin-bottom: 1.4rem;
     }
+
+    /* DEFINITION MODE */
+    #defMode { display: none; }
+    .def-pair {
+      display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem;
+    }
+    .def-word {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem; font-weight: 600; color: #7dd3fc;
+      letter-spacing: 0.5px; margin-bottom: 0.2rem;
+    }
+    .def-question {
+      font-size: 1rem; color: #e2e8f0; line-height: 1.65;
+    }
+    .def-choices { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.6rem; }
+    .def-btn {
+      padding: 0.6rem 1rem; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05); color: #cbd5e1;
+      font-size: 0.92rem; cursor: pointer; text-align: left;
+      transition: all 0.18s;
+    }
+    .def-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .def-btn.correct-choice { background: rgba(34,197,94,0.15); border-color: #22c55e; color: #4ade80; }
+    .def-btn.wrong-choice   { background: rgba(239,68,68,0.12); border-color: #ef4444; color: #f87171; }
+
     .input-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     input[type="text"] {
       flex: 1; padding: 0.65rem 1rem; font-size: 1rem;
-      border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.07); color: #f1f5f9; outline: none;
-      transition: border 0.2s;
+      border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06); color: #f1f5f9; outline: none;
+      transition: border 0.2s; font-family: 'Sora', sans-serif;
     }
-    input[type="text"]::placeholder { color: #475569; }
+    input[type="text"]::placeholder { color: #334155; }
     input[type="text"]:focus { border-color: #38bdf8; }
     input.correct-input { border-color: #22c55e !important; }
     input.wrong-input   { border-color: #ef4444 !important; }
     .buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
     button {
-      flex: 1 1 120px; padding: 0.65rem 1rem;
-      font-size: 0.95rem; font-weight: 600;
+      flex: 1 1 110px; padding: 0.65rem 1rem;
+      font-size: 0.92rem; font-weight: 600;
       border-radius: 12px; border: none; cursor: pointer;
       transition: opacity 0.15s, transform 0.1s;
+      font-family: 'Sora', sans-serif;
     }
     button:active { opacity: 0.8; transform: scale(0.97); }
     .btn-check  { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; }
-    .btn-reveal { background: rgba(255,255,255,0.08); color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
+    .btn-reveal { background: rgba(255,255,255,0.07); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
     .btn-next   { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; }
-    #feedback { margin-top: 1rem; min-height: 1.4rem; font-size: 0.97rem; font-weight: 500; }
+    #feedback { margin-top: 1rem; min-height: 1.4rem; font-size: 0.95rem; font-weight: 500; }
     .fb-correct { color: #4ade80; }
     .fb-wrong   { color: #f87171; }
     #answerBlock {
       display: none; margin-top: 1rem;
       padding: 1rem 1.1rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px; font-size: 0.93rem;
-      line-height: 1.7; color: #cbd5e1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; font-size: 0.92rem;
+      line-height: 1.75; color: #cbd5e1;
     }
     .ans-label {
-      color: #64748b; font-size: 0.75rem;
-      text-transform: uppercase; letter-spacing: 0.8px; margin-top: 0.75rem;
+      color: #475569; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 1px; margin-top: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
     }
     .ans-label:first-child { margin-top: 0; }
     .ans-word  { color: #34d399; font-weight: 700; font-size: 1.05rem; }
@@ -96,20 +157,34 @@
     .ans-ok    { color: #94a3b8; }
     .ans-sent  { color: #e2e8f0; font-style: italic; }
     .ans-explanation {
-      margin-top: 0.6rem;
+      margin-top: 0.65rem;
       padding: 0.85rem 1rem;
-      background: rgba(56,189,248,0.07);
+      background: rgba(56,189,248,0.06);
       border-left: 3px solid #38bdf8;
       border-radius: 0 8px 8px 0;
-      font-size: 0.89rem; color: #bae6fd; line-height: 1.7;
+      font-size: 0.88rem; color: #bae6fd; line-height: 1.75;
     }
     .ans-explanation .wrong-def { color: #fca5a5; font-weight: 600; }
     .ans-explanation .right-def { color: #6ee7b7; font-weight: 600; }
     .ans-explanation .ok-def    { color: #a5b4fc; font-weight: 600; }
     .ans-explanation hr {
-      border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0.5rem 0;
+      border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 0.5rem 0;
     }
-    .hint { margin-top: 1rem; font-size: 0.82rem; color: #475569; text-align: center; }
+    .hint { margin-top: 1rem; font-size: 0.8rem; color: #334155; text-align: center; }
+
+    /* DEF BLOCK for definition mode */
+    #defAnswerBlock {
+      display: none; margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; font-size: 0.92rem;
+      line-height: 1.75; color: #cbd5e1;
+    }
+    .pair-def-block { margin-bottom: 0.8rem; }
+    .pair-word { color: #7dd3fc; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .pair-meaning { color: #94a3b8; }
+
     @keyframes shake {
       0%,100% { transform: translateX(0); }
       20% { transform: translateX(-6px); }
@@ -119,7 +194,7 @@
     }
     .shake { animation: shake 0.35s ease; }
     @keyframes pop {
-      0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); }
+      0% { transform: scale(1); } 50% { transform: scale(1.025); } 100% { transform: scale(1); }
     }
     .pop { animation: pop 0.28s ease; }
     @keyframes confetti-drop {
@@ -140,381 +215,839 @@
 <body>
   <header>
     <h1>🎯 False Cognates Quiz</h1>
-    <p>Each sentence contains <strong>three false cognate-like words</strong>. Only <strong>one</strong> is used incorrectly. Find it and type the correct replacement.</p>
+    <p>Practice vocabulary that looks similar in French and English but means something different.</p>
   </header>
+
+  <div class="level-tabs">
+    <div class="level-tab active" id="tab1" onclick="setLevel(1)">📗 Level 1 – Basic</div>
+    <div class="level-tab" id="tab2" onclick="setLevel(2)">📘 Level 2 – Intermediate</div>
+    <div class="level-tab" id="tabAll" onclick="setLevel(0)">🌐 All levels</div>
+  </div>
+
+  <div class="mode-tabs">
+    <div class="mode-tab active" id="modeSentence" onclick="setMode('sentence')">📝 Sentence mode</div>
+    <div class="mode-tab" id="modeDefinition" onclick="setMode('definition')">📖 Definition mode</div>
+  </div>
+
   <div class="scorebar">
-    <span>✅ Correct: <strong id="scoreCorrect">0</strong></span>
-    <span>❌ Wrong: <strong id="scoreWrong">0</strong></span>
-    <span>📋 Total: <strong id="scoreTotal">0</strong></span>
+    <span>✅ <strong id="scoreCorrect">0</strong></span>
+    <span>❌ <strong id="scoreWrong">0</strong></span>
+    <span>📋 <strong id="scoreTotal">0</strong></span>
   </div>
   <div class="progress-wrap">
     <div class="progress-fill" id="progressFill"></div>
   </div>
+
   <div class="card" id="card">
     <div class="question-num" id="qNum">Question —</div>
-    <div id="sentence"></div>
-    <div class="input-row">
-      <input type="text" id="userInput" placeholder="Type the correct replacement word…" autocomplete="off" />
+
+    <!-- SENTENCE MODE -->
+    <div id="sentenceMode">
+      <div id="sentence"></div>
+      <div class="input-row">
+        <input type="text" id="userInput" placeholder="Type the correct replacement word…" autocomplete="off" />
+      </div>
+      <div class="buttons">
+        <button class="btn-check"  id="checkBtn">✔ Check</button>
+        <button class="btn-reveal" id="showBtn">👁 Reveal</button>
+        <button class="btn-next"   id="newBtn">→ Next</button>
+      </div>
+      <div id="feedback"></div>
+      <div id="answerBlock">
+        <div class="ans-label">The false cognate (used incorrectly)</div>
+        <div id="ansWrong" class="ans-wrong"></div>
+        <div class="ans-label">Should be replaced by</div>
+        <div class="ans-word" id="correctWord"></div>
+        <div class="ans-label">The other two were used correctly</div>
+        <div id="ansOk" class="ans-ok"></div>
+        <div class="ans-label">Corrected sentence</div>
+        <div class="ans-sent" id="correctSentence"></div>
+        <div class="ans-label">💡 Explanation</div>
+        <div class="ans-explanation" id="ansExplanation"></div>
+      </div>
+      <div class="hint">💡 All three highlighted words look like French — only one is misused.</div>
     </div>
-    <div class="buttons">
-      <button class="btn-check"  id="checkBtn">✔ Check</button>
-      <button class="btn-reveal" id="showBtn">👁 Reveal</button>
-      <button class="btn-next"   id="newBtn">→ New sentence</button>
+
+    <!-- DEFINITION MODE -->
+    <div id="defMode">
+      <div class="def-pair">
+        <div class="def-word" id="defWord"></div>
+        <div class="def-question" id="defQuestion">Which definition fits this word?</div>
+        <div class="def-choices" id="defChoices"></div>
+      </div>
+      <div class="buttons" style="margin-top:0.5rem">
+        <button class="btn-next" id="defNextBtn">→ Next</button>
+      </div>
+      <div id="defFeedback" style="margin-top:1rem; min-height:1.4rem; font-size:0.95rem; font-weight:500;"></div>
+      <div id="defAnswerBlock">
+        <div class="ans-label">The pair</div>
+        <div id="defPairExplain"></div>
+      </div>
     </div>
-    <div id="feedback"></div>
-    <div id="answerBlock">
-      <div class="ans-label">The false cognate (used incorrectly)</div>
-      <div id="ansWrong" class="ans-wrong"></div>
-      <div class="ans-label">Should be replaced by</div>
-      <div class="ans-word" id="correctWord"></div>
-      <div class="ans-label">The other two were used correctly</div>
-      <div id="ansOk" class="ans-ok"></div>
-      <div class="ans-label">Corrected sentence</div>
-      <div class="ans-sent" id="correctSentence"></div>
-      <div class="ans-label">💡 Explanation</div>
-      <div class="ans-explanation" id="ansExplanation"></div>
-    </div>
-    <div class="hint">💡 All three words look like French — but only one is misused. Read carefully.</div>
   </div>
 
   <script>
-    const items = [
-      {
-        sentence: "My professor told me to write a phrase explaining what makes a library different from a bookstore.",
-        falseWord: "phrase", correctWord: "sentence",
-        otherTwo: ["professor", "library"],
-        correctedSentence: "My professor told me to write a sentence explaining what makes a library different from a bookstore.",
-        explanation: `<span class='wrong-def'>"Phrase"</span> = a group of words without a subject+verb — not a complete thought. A complete thought ending with a period is a <span class='right-def'>"sentence"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who assigns written work.<br><span class='ok-def'>"Library"</span> ✓ — a place where you borrow books for free with a membership card.`
-      },
-      {
-        sentence: "The conductor asked his relative to stay home because the temperature outside was dangerous.",
-        falseWord: "temperature", correctWord: "weather",
-        otherTwo: ["conductor", "stay"],
-        correctedSentence: "The conductor asked his relative to stay home because the weather outside was dangerous.",
-        explanation: `<span class='wrong-def'>"Temperature"</span> = only a degree of heat or cold on a scale (e.g. 30°C). When describing rain, wind or stormy conditions, use <span class='right-def'>"weather"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
-      },
-      {
-        sentence: "The photographer used a crayon to label her supplies before the shoot.",
-        falseWord: "crayon", correctWord: "pencil",
-        otherTwo: ["photographer", "supplies"],
-        correctedSentence: "The photographer used a pencil to label her supplies before the shoot.",
-        explanation: `<span class='wrong-def'>"Crayon"</span> = a waxy colouring stick used by children — not a writing instrument. To write or label something you need a <span class='right-def'>"pencil"</span>, which has a graphite tip.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for work.`
-      },
-      {
-        sentence: "My relative bought all his furniture at the library across the street.",
-        falseWord: "library", correctWord: "bookstore",
-        otherTwo: ["relative", "furniture"],
-        correctedSentence: "My relative bought all his furniture at the bookstore across the street.",
-        explanation: `<span class='wrong-def'>"Library"</span> = a place where you borrow books for free — you cannot buy anything there. A store where you purchase books and supplies is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family (aunt, uncle, cousin, etc.).<br><span class='ok-def'>"Furniture"</span> ✓ — items found in rooms at home such as couches, chairs and tables.`
-      },
-      {
-        sentence: "The comedian forgot his lines and began to cry at the director during the piece.",
-        falseWord: "cry", correctWord: "scream",
-        otherTwo: ["comedian", "piece"],
-        correctedSentence: "The comedian forgot his lines and began to scream at the director during the piece.",
-        explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise the volume of your voice at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — in English, a comedian is someone who portrays a character in a production.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
-      },
-      {
-        sentence: "The comedian needed a doctor because he hurt his figure during rehearsal.",
-        falseWord: "figure", correctWord: "face",
-        otherTwo: ["comedian", "doctor"],
-        correctedSentence: "The comedian needed a doctor because he hurt his face during rehearsal.",
-        explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of a person's entire body. The part of the head that includes the eyes, nose and mouth is the <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick or injured people.`
-      },
-      {
-        sentence: "My professor is very fine — she never gives severe punishments to her students.",
-        falseWord: "fine", correctWord: "kind",
-        otherTwo: ["professor", "severe"],
-        correctedSentence: "My professor is very kind — she never gives severe punishments to her students.",
-        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank at a university.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe punishment is an extreme one.`
-      },
-      {
-        sentence: "During the vacancy, the infant stayed in the basement with his parents every evening.",
-        falseWord: "vacancy", correctWord: "vacation",
-        otherTwo: ["infant", "basement"],
-        correctedSentence: "During the vacation, the infant stayed in the basement with his parents every evening.",
-        explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an available position (e.g. a job vacancy). A period of travel and recreation is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
-      },
-      {
-        sentence: "The sensible child began to cry when the strict teacher gave her a low mark.",
-        falseWord: "sensible", correctWord: "sensitive",
-        otherTwo: ["strict", "mark"],
-        correctedSentence: "The sensitive child began to cry when the strict teacher gave her a low mark.",
-        explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and being wise. A child who cries easily is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Strict"</span> ✓ — rigid and disciplinary; a strict teacher enforces rules firmly.<br><span class='ok-def'>"Mark"</span> ✓ — a number showing the evaluation of school work.`
-      },
-      {
-        sentence: "My relative is a comedian who actually stays in a cave when he travels for shows.",
-        falseWord: "cave", correctWord: "basement",
-        otherTwo: ["comedian", "actually"],
-        correctedSentence: "My relative is a comedian who actually stays in a basement when he travels for shows.",
-        explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground floor of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs in shows.<br><span class='ok-def'>"Actually"</span> ✓ — means "in fact", used here to emphasize a surprising truth.`
-      },
-      {
-        sentence: "She demanded the conductor why the driver was going so fast.",
-        falseWord: "demanded", correctWord: "asked",
-        otherTwo: ["conductor", "driver"],
-        correctedSentence: "She asked the conductor why the driver was going so fast.",
-        explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — it does not mean to ask a question politely. The correct word is <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Driver"</span> ✓ — someone who drives a car, bus or taxi.`
-      },
-      {
-        sentence: "The doctor told the infant to rest at home and take his medicine twice a day.",
-        falseWord: "rest", correctWord: "stay",
-        otherTwo: ["doctor", "medicine"],
-        correctedSentence: "The doctor told the infant to stay at home and take his medicine twice a day.",
-        explanation: `<span class='wrong-def'>"Rest"</span> = stopping for a moment to take a break. To remain and live in a place, the correct word is <span class='right-def'>"stay"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people and prescribes medicine.<br><span class='ok-def'>"Medicine"</span> ✓ — a substance or preparation used in treating disease.`
-      },
-      {
-        sentence: "My relative works with dangerous mechanics in a factory and is currently looking for a new job.",
-        falseWord: "mechanics", correctWord: "machinery",
-        otherTwo: ["relative", "currently"],
-        correctedSentence: "My relative works with dangerous machinery in a factory and is currently looking for a new job.",
-        explanation: `<span class='wrong-def'>"Mechanic"</span> = a person who repairs engines — a human worker, not equipment. The machines in a factory are called <span class='right-def'>"machinery"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
-      },
-      {
-        sentence: "The photograph left a note for his clients before leaving for vacation.",
-        falseWord: "photograph", correctWord: "photographer",
-        otherTwo: ["note", "vacation"],
-        correctedSentence: "The photographer left a note for his clients before leaving for vacation.",
-        explanation: `<span class='wrong-def'>"Photograph"</span> = a picture — it is an object, not a person. The person who takes pictures professionally is a <span class='right-def'>"photographer"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information left for someone.<br><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.`
-      },
-      {
-        sentence: "She is a sympathetic teacher who gives good marks and stays after class to help.",
-        falseWord: "sympathetic", correctWord: "nice",
-        otherTwo: ["marks", "stay"],
-        correctedSentence: "She is a nice teacher who gives good marks and stays after class to help.",
-        explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not pleasant or agreeable. A pleasant, helpful teacher is <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Marks"</span> ✓ — numbers showing the evaluation of school work.<br><span class='ok-def'>"Stays"</span> ✓ — to remain in a place; she stays after class.`
-      },
-      {
-        sentence: "The comedian was sympathetic and always gentle with children in the audience.",
-        falseWord: "gentle", correctWord: "nice",
-        otherTwo: ["comedian", "sympathetic"],
-        correctedSentence: "The comedian was sympathetic and always nice with children in the audience.",
-        explanation: `<span class='wrong-def'>"Gentle"</span> = soft or delicate (e.g. a gentle touch). To say someone is polite and pleasant toward others, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs for audiences.<br><span class='ok-def'>"Sympathetic"</span> ✓ — sensitive to other people's emotions; a performer who connects emotionally.`
-      },
-      {
-        sentence: "I need to command a pencil from the bookstore before my exam next week.",
-        falseWord: "command", correctWord: "order",
-        otherTwo: ["pencil", "bookstore"],
-        correctedSentence: "I need to order a pencil from the bookstore before my exam next week.",
-        explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Pencil"</span> ✓ — a writing instrument with a graphite tip, used for exams.<br><span class='ok-def'>"Bookstore"</span> ✓ — a place to buy books and supplies.`
-      },
-      {
-        sentence: "My teacher was severe when I forgot my supplies at home before the exam.",
-        falseWord: "severe", correctWord: "strict",
-        otherTwo: ["teacher", "supplies"],
-        correctedSentence: "My teacher was strict when I forgot my supplies at home before the exam.",
-        explanation: `<span class='wrong-def'>"Severe"</span> = intense or violent (e.g. a severe storm, severe pain). A teacher who firmly enforces rules is <span class='right-def'>"strict"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct students.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for school (pens, notebooks, etc.).`
-      },
-      {
-        sentence: "The actor checked his note and actually rehearses for the piece every evening.",
-        falseWord: "actually", correctWord: "currently",
-        otherTwo: ["note", "piece"],
-        correctedSentence: "The actor checked his note and currently rehearses for the piece every evening.",
-        explanation: `<span class='wrong-def'>"Actually"</span> = in fact (used to correct or emphasize). To say something is happening right now, use <span class='right-def'>"currently"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information, like a rehearsal schedule.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story — a theatrical production.`
-      },
-      {
-        sentence: "During my vacancy, I saw a piece at a beautiful theatre downtown.",
-        falseWord: "vacancy", correctWord: "vacation",
-        otherTwo: ["piece", "theatre"],
-        correctedSentence: "During my vacation, I saw a piece at a beautiful theatre downtown.",
-        explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an unfilled position. A period of leisure and travel is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story; seeing a piece at a theatre is perfectly natural.<br><span class='ok-def'>"Theatre"</span> ✓ — the venue where pieces and plays are performed.`
-      },
-      {
-        sentence: "My professor is actually very fine — she explains every sentence clearly.",
-        falseWord: "fine", correctWord: "kind",
-        otherTwo: ["professor", "sentence"],
-        correctedSentence: "My professor is actually very kind — she explains every sentence clearly.",
-        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who teaches at a university.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought ending with a period; the unit a professor explains.`
-      },
-      {
-        sentence: "The sensible infant began to cry when the conductor screamed at the passengers.",
-        falseWord: "sensible", correctWord: "sensitive",
-        otherTwo: ["infant", "conductor"],
-        correctedSentence: "The sensitive infant began to cry when the conductor screamed at the passengers.",
-        explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and wisdom. A baby who cries at loud sounds is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person who would naturally cry at loud sounds.<br><span class='ok-def'>"Conductor"</span> ✓ — someone who drives/operates a train and interacts with passengers.`
-      },
-      {
-        sentence: "My relative demanded the doctor why the medicine was so expensive.",
-        falseWord: "demanded", correctWord: "asked",
-        otherTwo: ["relative", "doctor"],
-        correctedSentence: "My relative asked the doctor why the medicine was so expensive.",
-        explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — not to pose a question. To politely ask someone a question, use <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people; the one you ask about medicine.`
-      },
-      {
-        sentence: "The photographer stayed in the cave below the old house during the severe storm.",
-        falseWord: "cave", correctWord: "basement",
-        otherTwo: ["photographer", "severe"],
-        correctedSentence: "The photographer stayed in the basement below the old house during the severe storm.",
-        explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground level of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe storm is an extreme one.`
-      },
-      {
-        sentence: "My teacher commanded a new set of supplies and a crayon for the art class.",
-        falseWord: "commanded", correctWord: "ordered",
-        otherTwo: ["teacher", "crayon"],
-        correctedSentence: "My teacher ordered a new set of supplies and a crayon for the art class.",
-        explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a catalogue or business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct; ordering class materials is normal.<br><span class='ok-def'>"Crayon"</span> ✓ — a waxy colouring stick used by children; perfect for an art class.`
-      },
-      {
-        sentence: "She is a fine doctor who gives gentle care to every infant in the clinic.",
-        falseWord: "fine", correctWord: "kind",
-        otherTwo: ["doctor", "infant"],
-        correctedSentence: "She is a kind doctor who gives gentle care to every infant in the clinic.",
-        explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right. To describe a doctor who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people in a clinic.<br><span class='ok-def'>"Infant"</span> ✓ — a baby or very young child; common patients in a clinic.`
-      },
-      {
-        sentence: "The comedian cried at the audience when he forgot his sentence on stage.",
-        falseWord: "cried", correctWord: "screamed",
-        otherTwo: ["comedian", "sentence"],
-        correctedSentence: "The comedian screamed at the audience when he forgot his sentence on stage.",
-        explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise your voice loudly at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who portrays a character in a production and performs on stage.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought; a performer can forget their lines (sentences) on stage.`
-      },
-      {
-        sentence: "My relative works with dangerous mechanics and currently lives near a library.",
-        falseWord: "library", correctWord: "bookstore",
-        otherTwo: ["relative", "currently"],
-        correctedSentence: "My relative works with dangerous mechanics and currently lives near a bookstore.",
-        explanation: `<span class='wrong-def'>"Library"</span> = a place to borrow books for free — you cannot shop there. A place that sells books is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
-      },
-      {
-        sentence: "The photographer took pictures of the figure on the wall and the child in the basement.",
-        falseWord: "figure", correctWord: "face",
-        otherTwo: ["photographer", "basement"],
-        correctedSentence: "The photographer took pictures of the face on the wall and the child in the basement.",
-        explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of someone's entire body. A painted image showing eyes, nose and mouth is a <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
-      },
-      {
-        sentence: "The actor was sympathetic and gave a wonderful performance in the piece.",
-        falseWord: "sympathetic", correctWord: "nice",
-        otherTwo: ["actor", "piece"],
-        correctedSentence: "The actor was nice and gave a wonderful performance in the piece.",
-        explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not a general word for pleasant or friendly. To say someone is agreeable and pleasant, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Actor"</span> ✓ — someone who writes or tells jokes and performs; here performing in a theatrical piece.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
-      },
-      {
-        sentence: "The professor gave a low note to the sensitive student who had worked very hard.",
-        falseWord: "note", correctWord: "mark",
-        otherTwo: ["professor", "sensitive"],
-        correctedSentence: "The professor gave a low mark to the sensitive student who had worked very hard.",
-        explanation: `<span class='wrong-def'>"Note"</span> = a written message or record of information. A number showing the evaluation of school work is a <span class='right-def'>"mark"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who grades students.<br><span class='ok-def'>"Sensitive"</span> ✓ — emotionally delicate; a sensitive student would be upset by a low grade.`
-      },
-      {
-        sentence: "All of her parents, including her cousins, wanted her to stay during the vacation.",
-        falseWord: "parents", correctWord: "relatives",
-        otherTwo: ["vacation", "stay"],
-        correctedSentence: "All of her relatives, including her cousins, wanted her to stay during the vacation.",
-        explanation: `<span class='wrong-def'>"Parent"</span> = your mother or father only — it cannot include cousins. Anyone in your family is a <span class='right-def'>"relative"</span>.<hr><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
-      }
-    ];
+  // ============================================================
+  // DATA
+  // ============================================================
 
-    let currentIndex = -1;
-    let answered = false;
-    let scoreCorrect = 0, scoreWrong = 0, scoreTotal = 0;
-    let usedIndices = [];
+  // LEVEL 1 — sentence items (False Cognates #1)
+  const sentenceItems1 = [
+    {
+      sentence: "My professor told me to write a phrase explaining what makes a library different from a bookstore.",
+      falseWord: "phrase", correctWord: "sentence",
+      otherTwo: ["professor", "library"],
+      correctedSentence: "My professor told me to write a sentence explaining what makes a library different from a bookstore.",
+      explanation: `<span class='wrong-def'>"Phrase"</span> = a group of words without a subject+verb — not a complete thought. A complete thought ending with a period is a <span class='right-def'>"sentence"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who assigns written work.<br><span class='ok-def'>"Library"</span> ✓ — a place where you borrow books for free with a membership card.`
+    },
+    {
+      sentence: "The conductor asked his relative to stay home because the temperature outside was dangerous.",
+      falseWord: "temperature", correctWord: "weather",
+      otherTwo: ["conductor", "stay"],
+      correctedSentence: "The conductor asked his relative to stay home because the weather outside was dangerous.",
+      explanation: `<span class='wrong-def'>"Temperature"</span> = only a degree of heat or cold on a scale (e.g. 30°C). When describing rain, wind or stormy conditions, use <span class='right-def'>"weather"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
+    },
+    {
+      sentence: "The photographer used a crayon to label her supplies before the shoot.",
+      falseWord: "crayon", correctWord: "pencil",
+      otherTwo: ["photographer", "supplies"],
+      correctedSentence: "The photographer used a pencil to label her supplies before the shoot.",
+      explanation: `<span class='wrong-def'>"Crayon"</span> = a waxy colouring stick used by children — not a writing instrument. To write or label something you need a <span class='right-def'>"pencil"</span>, which has a graphite tip.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for work.`
+    },
+    {
+      sentence: "My relative bought all his furniture at the library across the street.",
+      falseWord: "library", correctWord: "bookstore",
+      otherTwo: ["relative", "furniture"],
+      correctedSentence: "My relative bought all his furniture at the bookstore across the street.",
+      explanation: `<span class='wrong-def'>"Library"</span> = a place where you borrow books for free — you cannot buy anything there. A store where you purchase books and supplies is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family (aunt, uncle, cousin, etc.).<br><span class='ok-def'>"Furniture"</span> ✓ — items found in rooms at home such as couches, chairs and tables.`
+    },
+    {
+      sentence: "The comedian forgot his lines and began to cry at the director during the piece.",
+      falseWord: "cry", correctWord: "scream",
+      otherTwo: ["comedian", "piece"],
+      correctedSentence: "The comedian forgot his lines and began to scream at the director during the piece.",
+      explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise the volume of your voice at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who writes or tells jokes; here using the word in a theatrical context.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
+    },
+    {
+      sentence: "The actor needed a doctor because he hurt his figure during rehearsal.",
+      falseWord: "figure", correctWord: "face",
+      otherTwo: ["actor", "doctor"],
+      correctedSentence: "The actor needed a doctor because he hurt his face during rehearsal.",
+      explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of a person's entire body. The part of the head that includes the eyes, nose and mouth is the <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Actor"</span> ✓ — someone who portrays a character in a production.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick or injured people.`
+    },
+    {
+      sentence: "My professor is very fine — she never gives severe punishments to her students.",
+      falseWord: "fine", correctWord: "kind",
+      otherTwo: ["professor", "severe"],
+      correctedSentence: "My professor is very kind — she never gives severe punishments to her students.",
+      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank at a university.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe punishment is an extreme one.`
+    },
+    {
+      sentence: "During the vacancy, the infant stayed in the basement with his parents every evening.",
+      falseWord: "vacancy", correctWord: "vacation",
+      otherTwo: ["infant", "basement"],
+      correctedSentence: "During the vacation, the infant stayed in the basement with his parents every evening.",
+      explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an available position (e.g. a job vacancy). A period of travel and recreation is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
+    },
+    {
+      sentence: "The sensible child began to cry when the strict teacher gave her a low mark.",
+      falseWord: "sensible", correctWord: "sensitive",
+      otherTwo: ["strict", "mark"],
+      correctedSentence: "The sensitive child began to cry when the strict teacher gave her a low mark.",
+      explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and being wise. A child who cries easily is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Strict"</span> ✓ — rigid and disciplinary; a strict teacher enforces rules firmly.<br><span class='ok-def'>"Mark"</span> ✓ — a number showing the evaluation of school work.`
+    },
+    {
+      sentence: "My relative is a comedian who actually stays in a cave when he travels for shows.",
+      falseWord: "cave", correctWord: "basement",
+      otherTwo: ["comedian", "actually"],
+      correctedSentence: "My relative is a comedian who actually stays in a basement when he travels for shows.",
+      explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground floor of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who writes or tells jokes and performs.<br><span class='ok-def'>"Actually"</span> ✓ — means "in fact", used to emphasize a surprising truth.`
+    },
+    {
+      sentence: "She demanded the conductor why the driver was going so fast.",
+      falseWord: "demanded", correctWord: "asked",
+      otherTwo: ["conductor", "driver"],
+      correctedSentence: "She asked the conductor why the driver was going so fast.",
+      explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — it does not mean to ask a question politely. The correct word is <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Driver"</span> ✓ — someone who drives a car, bus or taxi.`
+    },
+    {
+      sentence: "The doctor told the infant to rest at home and take his medicine twice a day.",
+      falseWord: "rest", correctWord: "stay",
+      otherTwo: ["doctor", "medicine"],
+      correctedSentence: "The doctor told the infant to stay at home and take his medicine twice a day.",
+      explanation: `<span class='wrong-def'>"Rest"</span> = stopping for a moment to take a break. To remain and live in a place, the correct word is <span class='right-def'>"stay"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people and prescribes medicine.<br><span class='ok-def'>"Medicine"</span> ✓ — a substance or preparation used in treating disease.`
+    },
+    {
+      sentence: "My relative works with dangerous mechanics in a factory and is currently looking for a new job.",
+      falseWord: "mechanics", correctWord: "machinery",
+      otherTwo: ["relative", "currently"],
+      correctedSentence: "My relative works with dangerous machinery in a factory and is currently looking for a new job.",
+      explanation: `<span class='wrong-def'>"Mechanic"</span> = a person who repairs engines — a human worker, not equipment. The machines in a factory are called <span class='right-def'>"machinery"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
+    },
+    {
+      sentence: "The photograph left a note for his clients before leaving for vacation.",
+      falseWord: "photograph", correctWord: "photographer",
+      otherTwo: ["note", "vacation"],
+      correctedSentence: "The photographer left a note for his clients before leaving for vacation.",
+      explanation: `<span class='wrong-def'>"Photograph"</span> = a picture — it is an object, not a person. The person who takes pictures professionally is a <span class='right-def'>"photographer"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information left for someone.<br><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.`
+    },
+    {
+      sentence: "She is a sympathetic teacher who gives good marks and stays after class to help.",
+      falseWord: "sympathetic", correctWord: "nice",
+      otherTwo: ["marks", "stay"],
+      correctedSentence: "She is a nice teacher who gives good marks and stays after class to help.",
+      explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not the word for pleasant or agreeable. A pleasant, helpful teacher is <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Marks"</span> ✓ — numbers showing the evaluation of school work.<br><span class='ok-def'>"Stays"</span> ✓ — to remain in a place; she stays after class.`
+    },
+    {
+      sentence: "The comedian was sympathetic and always gentle with children in the audience.",
+      falseWord: "gentle", correctWord: "nice",
+      otherTwo: ["comedian", "sympathetic"],
+      correctedSentence: "The comedian was sympathetic and always nice with children in the audience.",
+      explanation: `<span class='wrong-def'>"Gentle"</span> = soft or delicate (e.g. a gentle touch). To say someone is polite and pleasant toward others, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who writes or tells jokes and performs for audiences.<br><span class='ok-def'>"Sympathetic"</span> ✓ — sensitive to other people's emotions.`
+    },
+    {
+      sentence: "I need to command a pencil from the bookstore before my exam next week.",
+      falseWord: "command", correctWord: "order",
+      otherTwo: ["pencil", "bookstore"],
+      correctedSentence: "I need to order a pencil from the bookstore before my exam next week.",
+      explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Pencil"</span> ✓ — a writing instrument with a graphite tip, used for exams.<br><span class='ok-def'>"Bookstore"</span> ✓ — a place to buy books and supplies.`
+    },
+    {
+      sentence: "My teacher was severe when I forgot my supplies at home before the exam.",
+      falseWord: "severe", correctWord: "strict",
+      otherTwo: ["teacher", "supplies"],
+      correctedSentence: "My teacher was strict when I forgot my supplies at home before the exam.",
+      explanation: `<span class='wrong-def'>"Severe"</span> = intense or violent (e.g. a severe storm, severe pain). A teacher who firmly enforces rules is <span class='right-def'>"strict"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct students.<br><span class='ok-def'>"Supplies"</span> ✓ — provisions and items needed for school (pens, notebooks, etc.).`
+    },
+    {
+      sentence: "The actor checked his note and actually rehearses for the piece every evening.",
+      falseWord: "actually", correctWord: "currently",
+      otherTwo: ["note", "piece"],
+      correctedSentence: "The actor checked his note and currently rehearses for the piece every evening.",
+      explanation: `<span class='wrong-def'>"Actually"</span> = in fact (used to correct or emphasize). To say something is happening right now, use <span class='right-def'>"currently"</span>.<hr><span class='ok-def'>"Note"</span> ✓ — a written message or record of information, like a rehearsal schedule.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story — a theatrical production.`
+    },
+    {
+      sentence: "During my vacancy, I saw a piece at a beautiful theatre downtown.",
+      falseWord: "vacancy", correctWord: "vacation",
+      otherTwo: ["piece", "theatre"],
+      correctedSentence: "During my vacation, I saw a piece at a beautiful theatre downtown.",
+      explanation: `<span class='wrong-def'>"Vacancy"</span> = an empty space in a building or an unfilled position. A period of leisure and travel is a <span class='right-def'>"vacation"</span>.<hr><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.<br><span class='ok-def'>"Theatre"</span> ✓ — the venue where pieces and plays are performed.`
+    },
+    {
+      sentence: "My professor is actually very fine — she explains every sentence clearly.",
+      falseWord: "fine", correctWord: "kind",
+      otherTwo: ["professor", "sentence"],
+      correctedSentence: "My professor is actually very kind — she explains every sentence clearly.",
+      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right (e.g. "I'm fine"). To describe someone who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who teaches at a university.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought ending with a period.`
+    },
+    {
+      sentence: "The sensible infant began to cry when the conductor screamed at the passengers.",
+      falseWord: "sensible", correctWord: "sensitive",
+      otherTwo: ["infant", "conductor"],
+      correctedSentence: "The sensitive infant began to cry when the conductor screamed at the passengers.",
+      explanation: `<span class='wrong-def'>"Sensible"</span> = having good judgment and wisdom. A baby who cries at loud sounds is <span class='right-def'>"sensitive"</span> — emotionally delicate.<hr><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person who would naturally cry at loud sounds.<br><span class='ok-def'>"Conductor"</span> ✓ — someone who drives/operates a train and interacts with passengers.`
+    },
+    {
+      sentence: "My relative demanded the doctor why the medicine was so expensive.",
+      falseWord: "demanded", correctWord: "asked",
+      otherTwo: ["relative", "doctor"],
+      correctedSentence: "My relative asked the doctor why the medicine was so expensive.",
+      explanation: `<span class='wrong-def'>"Demand"</span> = to request something forcefully — not to pose a question. To politely ask someone a question, use <span class='right-def'>"ask"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people; the one you ask about medicine.`
+    },
+    {
+      sentence: "The photographer stayed in the cave below the old house during the severe storm.",
+      falseWord: "cave", correctWord: "basement",
+      otherTwo: ["photographer", "severe"],
+      correctedSentence: "The photographer stayed in the basement below the old house during the severe storm.",
+      explanation: `<span class='wrong-def'>"Cave"</span> = a natural hole in the earth — not part of a building. The underground level of a house is the <span class='right-def'>"basement"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Severe"</span> ✓ — intense or violent; a severe storm is an extreme one.`
+    },
+    {
+      sentence: "My teacher commanded a new set of supplies and a crayon for the art class.",
+      falseWord: "commanded", correctWord: "ordered",
+      otherTwo: ["teacher", "crayon"],
+      correctedSentence: "My teacher ordered a new set of supplies and a crayon for the art class.",
+      explanation: `<span class='wrong-def'>"Command"</span> = to tell someone officially to do something — an authority directive. To request goods from a catalogue or business, use <span class='right-def'>"order"</span>.<hr><span class='ok-def'>"Teacher"</span> ✓ — one whose occupation is to instruct; ordering class materials is normal.<br><span class='ok-def'>"Crayon"</span> ✓ — a waxy colouring stick used by children; perfect for an art class.`
+    },
+    {
+      sentence: "She is a fine doctor who gives gentle care to every infant in the clinic.",
+      falseWord: "fine", correctWord: "kind",
+      otherTwo: ["doctor", "infant"],
+      correctedSentence: "She is a kind doctor who gives gentle care to every infant in the clinic.",
+      explanation: `<span class='wrong-def'>"Fine"</span> = very well or all right. To describe a doctor who is helpful and caring, use <span class='right-def'>"kind"</span>.<hr><span class='ok-def'>"Doctor"</span> ✓ — the person who helps sick people in a clinic.<br><span class='ok-def'>"Infant"</span> ✓ — a baby or very young child; common patients in a clinic.`
+    },
+    {
+      sentence: "The comedian cried at the audience when he forgot his sentence on stage.",
+      falseWord: "cried", correctWord: "screamed",
+      otherTwo: ["comedian", "sentence"],
+      correctedSentence: "The comedian screamed at the audience when he forgot his sentence on stage.",
+      explanation: `<span class='wrong-def'>"Cry"</span> = to shed tears when you are sad. To raise your voice loudly at someone is to <span class='right-def'>"scream"</span>.<hr><span class='ok-def'>"Comedian"</span> ✓ — someone who writes or tells jokes and performs on stage.<br><span class='ok-def'>"Sentence"</span> ✓ — a complete thought; a performer can forget their lines on stage.`
+    },
+    {
+      sentence: "My relative works with dangerous mechanics and currently lives near a library.",
+      falseWord: "library", correctWord: "bookstore",
+      otherTwo: ["relative", "currently"],
+      correctedSentence: "My relative works with dangerous mechanics and currently lives near a bookstore.",
+      explanation: `<span class='wrong-def'>"Library"</span> = a place to borrow books for free — you cannot shop there. A place that sells books is a <span class='right-def'>"bookstore"</span>.<hr><span class='ok-def'>"Relative"</span> ✓ — anyone in your family.<br><span class='ok-def'>"Currently"</span> ✓ — at this moment, right now.`
+    },
+    {
+      sentence: "The photographer took pictures of the figure on the wall and the child in the basement.",
+      falseWord: "figure", correctWord: "face",
+      otherTwo: ["photographer", "basement"],
+      correctedSentence: "The photographer took pictures of the face on the wall and the child in the basement.",
+      explanation: `<span class='wrong-def'>"Figure"</span> = the shape or form of someone's entire body. A painted image showing eyes, nose and mouth is a <span class='right-def'>"face"</span>.<hr><span class='ok-def'>"Photographer"</span> ✓ — the person who takes pictures professionally.<br><span class='ok-def'>"Basement"</span> ✓ — the part of a house below ground level.`
+    },
+    {
+      sentence: "The actor was sympathetic and gave a wonderful performance in the piece.",
+      falseWord: "sympathetic", correctWord: "nice",
+      otherTwo: ["actor", "piece"],
+      correctedSentence: "The actor was nice and gave a wonderful performance in the piece.",
+      explanation: `<span class='wrong-def'>"Sympathetic"</span> = sensitive to other people's emotions — not a general word for pleasant or friendly. To say someone is agreeable and pleasant, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Actor"</span> ✓ — someone who portrays a character in a production.<br><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
+    },
+    {
+      sentence: "The professor gave a low note to the sensitive student who had worked very hard.",
+      falseWord: "note", correctWord: "mark",
+      otherTwo: ["professor", "sensitive"],
+      correctedSentence: "The professor gave a low mark to the sensitive student who had worked very hard.",
+      explanation: `<span class='wrong-def'>"Note"</span> = a written message or record of information. A number showing the evaluation of school work is a <span class='right-def'>"mark"</span>.<hr><span class='ok-def'>"Professor"</span> ✓ — a faculty member of the highest academic rank who grades students.<br><span class='ok-def'>"Sensitive"</span> ✓ — emotionally delicate; a sensitive student would be upset by a low grade.`
+    },
+    {
+      sentence: "All of her parents, including her cousins, wanted her to stay during the vacation.",
+      falseWord: "parents", correctWord: "relatives",
+      otherTwo: ["vacation", "stay"],
+      correctedSentence: "All of her relatives, including her cousins, wanted her to stay during the vacation.",
+      explanation: `<span class='wrong-def'>"Parent"</span> = your mother or father only — it cannot include cousins. Anyone in your family is a <span class='right-def'>"relative"</span>.<hr><span class='ok-def'>"Vacation"</span> ✓ — a period spent away from home for travel or recreation.<br><span class='ok-def'>"Stay"</span> ✓ — to remain and live in a place.`
+    },
+    {
+      sentence: "He plays in a piece every night — he's a fantastic comedian.",
+      falseWord: "comedian", correctWord: "actor",
+      otherTwo: ["piece"],
+      correctedSentence: "He plays in a piece every night — he's a fantastic actor.",
+      explanation: `<span class='wrong-def'>"Comedian"</span> = someone who writes or tells jokes, like a stand-up comic. Someone who portrays a character in a play or film is an <span class='right-def'>"actor"</span>.<hr><span class='ok-def'>"Piece"</span> ✓ — the stage representation of an action or story.`
+    },
+    {
+      sentence: "The conductor screamed at the infant, which was a very gentle thing to do.",
+      falseWord: "gentle", correctWord: "nice",
+      otherTwo: ["conductor", "infant"],
+      correctedSentence: "The conductor was nice to the infant, which was a very kind thing to do.",
+      explanation: `<span class='wrong-def'>"Gentle"</span> = soft or delicate to the touch — not used to describe someone's character toward others. To describe someone who is polite and pleasant, use <span class='right-def'>"nice"</span>.<hr><span class='ok-def'>"Conductor"</span> ✓ — someone who drives or operates a train.<br><span class='ok-def'>"Infant"</span> ✓ — a baby or very young person.`
+    }
+  ];
 
-    function updateScore() {
-      document.getElementById("scoreCorrect").textContent = scoreCorrect;
-      document.getElementById("scoreWrong").textContent   = scoreWrong;
-      document.getElementById("scoreTotal").textContent   = scoreTotal;
-      const pct = Math.min(100, Math.round((usedIndices.length / items.length) * 100));
-      document.getElementById("progressFill").style.width = pct + "%";
+  // LEVEL 2 — sentence items (False Cognates #2)
+  const sentenceItems2 = [
+    {
+      sentence: "I'm going to my cousin's wedding this summer. It should be a great party!",
+      falseWord: "wedding", correctWord: "wedding",
+      otherTwo: [],
+      correctedSentence: "I'm going to my cousin's wedding this summer. It should be a great party!",
+      explanation: `This sentence is already correct. <span class='right-def'>"Wedding"</span> = a ceremony during which two people get married. "Marriage" would refer to the ongoing legal state, not the event itself.<hr>Note: No false cognate error here — it's a model correct sentence.`
+    },
+    {
+      sentence: "There is a lot of reading to do for my literature course before the next class.",
+      falseWord: "reading", correctWord: "reading",
+      otherTwo: [],
+      correctedSentence: "There is a lot of reading to do for my literature course before the next class.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Reading"</span> = taking in the sense of letters and symbols using one's eyes. "Lecture" would be a discourse given before an audience, not what a student does at home.`
+    },
+    {
+      sentence: "Julie begins her internship with the government next week.",
+      falseWord: "internship", correctWord: "internship",
+      otherTwo: [],
+      correctedSentence: "Julie begins her internship with the government next week.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Internship"</span> = a practice term in the workforce related to your studies. "Stage" (in English) refers to a theatre stage, not a work placement.`
+    },
+    {
+      sentence: "I registered for the wrong course — can I change my registration?",
+      falseWord: "registration", correctWord: "registration",
+      otherTwo: ["inscription"],
+      correctedSentence: "I registered for the wrong course — can I change my registration?",
+      explanation: `<span class='right-def'>"Registration"</span> = the event of officially signing up for a course. <span class='wrong-def'>"Inscription"</span> = words engraved on a monument or object — not for signing up to a course.<hr><span class='ok-def'>"Inscription"</span> ✗ — not interchangeable here.`
+    },
+    {
+      sentence: "We have to summarise several texts in our writing course.",
+      falseWord: "summarise", correctWord: "summarise",
+      otherTwo: [],
+      correctedSentence: "We have to summarise several texts in our writing course.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Summarise"</span> = to tell something in a short form. "Resume" = to return to or begin again after interruption — not the same!`
+    },
+    {
+      sentence: "They lost everything in the fire, but they will always have great memories.",
+      falseWord: "memories", correctWord: "memories",
+      otherTwo: [],
+      correctedSentence: "They lost everything in the fire, but they will always have great memories.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Memory"</span> = the recollection of an event in your mind. "Souvenir" = a physical object you keep to remember an event — you cannot "have great souvenirs" in your mind.`
+    },
+    {
+      sentence: "Have you completed your inscription for next semester?",
+      falseWord: "inscription", correctWord: "registration",
+      otherTwo: [],
+      correctedSentence: "Have you completed your registration for next semester?",
+      explanation: `<span class='wrong-def'>"Inscription"</span> = words engraved on a monument or object. To officially sign up for a course, use <span class='right-def'>"registration"</span>.`
+    },
+    {
+      sentence: "Joel's bad exam results were a deception for his parents.",
+      falseWord: "deception", correctWord: "disappointment",
+      otherTwo: [],
+      correctedSentence: "Joel's bad exam results were a disappointment for his parents.",
+      explanation: `<span class='wrong-def'>"Deception"</span> = deliberately misleading or cheating someone. Failing to meet expectations causes <span class='right-def'>"disappointment"</span>.`
+    },
+    {
+      sentence: "The reason for the social worker's hiring was to work with juvenile delinquents.",
+      falseWord: "hiring", correctWord: "hiring",
+      otherTwo: [],
+      correctedSentence: "The reason for the social worker's hiring was to work with juvenile delinquents.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Hiring"</span> = the moment of receiving employment. "Engagement" = the moment of an agreement to be married — not suitable in a professional employment context.`
+    },
+    {
+      sentence: "You look very sad; did something tragic arrive?",
+      falseWord: "arrive", correctWord: "happen",
+      otherTwo: [],
+      correctedSentence: "You look very sad; did something tragic happen?",
+      explanation: `<span class='wrong-def'>"Arrive"</span> = to reach a destination. When something takes place or occurs, use <span class='right-def'>"happen"</span>.`
+    },
+    {
+      sentence: "I'm going to pick something up for supper on my way home from work. Do you have any demands?",
+      falseWord: "demands", correctWord: "requests",
+      otherTwo: [],
+      correctedSentence: "I'm going to pick something up for supper on my way home from work. Do you have any requests?",
+      explanation: `<span class='wrong-def'>"Demand"</span> (noun) = an act of asking with strong authority. A polite way of asking for something is a <span class='right-def'>"request"</span>.`
+    },
+    {
+      sentence: "As a part of my education, my parents taught me to be polite to others.",
+      falseWord: "education", correctWord: "upbringing",
+      otherTwo: [],
+      correctedSentence: "As a part of my upbringing, my parents taught me to be polite to others.",
+      explanation: `<span class='wrong-def'>"Education"</span> = methods of teaching and learning in schools. The way your parents raised you at home is your <span class='right-def'>"upbringing"</span>.`
+    },
+    {
+      sentence: "There was very little formation when I started my job. My boss just expected me to learn.",
+      falseWord: "formation", correctWord: "training",
+      otherTwo: [],
+      correctedSentence: "There was very little training when I started my job. My boss just expected me to learn.",
+      explanation: `<span class='wrong-def'>"Formation"</span> = an act of giving form or shape to something. Acquiring skills or knowledge for a job is <span class='right-def'>"training"</span>.`
+    },
+    {
+      sentence: "As a reporter, I sometimes assist trials at the courthouse.",
+      falseWord: "assist", correctWord: "attend",
+      otherTwo: [],
+      correctedSentence: "As a reporter, I sometimes attend trials at the courthouse.",
+      explanation: `<span class='wrong-def'>"Assist"</span> = to help someone with something. To be present at an event is to <span class='right-def'>"attend"</span>.`
+    },
+    {
+      sentence: "What is the local number for tomorrow's meeting? I don't want to be late.",
+      falseWord: "local", correctWord: "room",
+      otherTwo: [],
+      correctedSentence: "What is the room number for tomorrow's meeting? I don't want to be late.",
+      explanation: `<span class='wrong-def'>"Local"</span> = an affiliate or branch of an organization (e.g. a labour union). An area within a building set apart by walls is a <span class='right-def'>"room"</span>.`
+    },
+    {
+      sentence: "The sun is very bright today. Could you close the stores, please?",
+      falseWord: "stores", correctWord: "blinds",
+      otherTwo: [],
+      correctedSentence: "The sun is very bright today. Could you close the blinds, please?",
+      explanation: `<span class='wrong-def'>"Store"</span> = a retail business where goods are sold. Something on a window to keep light out of a room is a <span class='right-def'>"blind"</span>.`
+    },
+    {
+      sentence: "I am very excited about the play currently being presented at the local theatre. I'm going to attend tomorrow night's performance.",
+      falseWord: "attend", correctWord: "attend",
+      otherTwo: [],
+      correctedSentence: "I am very excited about the play currently being presented at the local theatre. I'm going to attend tomorrow night's performance.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Attend"</span> = to be present for an event. "Wait" = to stay in place in expectation of something — not the same.`
+    },
+    {
+      sentence: "When his parents retire, Josh will run the family enterprise. They have a small clothing factory which employs fifty people in their town.",
+      falseWord: "enterprise", correctWord: "company",
+      otherTwo: [],
+      correctedSentence: "When his parents retire, Josh will run the family company. They have a small clothing factory which employs fifty people in their town.",
+      explanation: `<span class='wrong-def'>"Enterprise"</span> = a small business that sells goods or services. A larger business organization (like one with a factory employing fifty people) is a <span class='right-def'>"company"</span>.`
+    },
+    {
+      sentence: "My girlfriend doesn't mind that I play hockey three nights a week with my friends. She is extremely comprehensive.",
+      falseWord: "comprehensive", correctWord: "understanding",
+      otherTwo: [],
+      correctedSentence: "My girlfriend doesn't mind that I play hockey three nights a week with my friends. She is extremely understanding.",
+      explanation: `<span class='wrong-def'>"Comprehensive"</span> = inclusive or covering completely — it describes things, not people. Someone who is sympathetic about other people's problems is <span class='right-def'>"understanding"</span>.`
+    },
+    {
+      sentence: "My mother was shocked when I took her car without asking her first, so I promised to never do it again.",
+      falseWord: "shocked", correctWord: "upset",
+      otherTwo: [],
+      correctedSentence: "My mother was upset when I took her car without asking her first, so I promised to never do it again.",
+      explanation: `<span class='wrong-def'>"Shocked"</span> = struck with surprise, terror, horror, or disgust — a very strong reaction. <span class='right-def'>"Upset"</span> = emotionally agitated or bothered — more appropriate for this everyday situation.`
+    },
+    {
+      sentence: "I'll see you at supper tonight. Have a good journey at work!",
+      falseWord: "journey", correctWord: "day",
+      otherTwo: [],
+      correctedSentence: "I'll see you at supper tonight. Have a good day at work!",
+      explanation: `<span class='wrong-def'>"Journey"</span> = an act of traveling from one very distant place to another. The time of light between one night and the next is a <span class='right-def'>"day"</span>.`
+    },
+    {
+      sentence: "It is part of a supervisor's job to form new employees.",
+      falseWord: "form", correctWord: "train",
+      otherTwo: [],
+      correctedSentence: "It is part of a supervisor's job to train new employees.",
+      explanation: `<span class='wrong-def'>"Form"</span> (verb) = to give a particular shape to something. To give instruction or develop skills is to <span class='right-def'>"train"</span>.`
+    },
+    {
+      sentence: "Your shirt smells really fresh! Which mark of laundry soap do you use?",
+      falseWord: "mark", correctWord: "brand",
+      otherTwo: [],
+      correctedSentence: "Your shirt smells really fresh! Which brand of laundry soap do you use?",
+      explanation: `<span class='wrong-def'>"Mark"</span> = a teacher's estimate of a student's work. The original maker of merchandise or a product line is a <span class='right-def'>"brand"</span>.`
+    },
+    {
+      sentence: "Mr. and Mrs. Brooks are seeing a counsellor in order to work on their relation.",
+      falseWord: "relation", correctWord: "relationship",
+      otherTwo: [],
+      correctedSentence: "Mr. and Mrs. Brooks are seeing a counsellor in order to work on their relationship.",
+      explanation: `<span class='wrong-def'>"Relation"</span> = an interaction, usually between things; impersonal. A personal connection between people is a <span class='right-def'>"relationship"</span>.`
+    },
+    {
+      sentence: "I need to stop at the chocolate shop on the way home to get a little gift for my girlfriend. Do you mind waiting in the car for five minutes?",
+      falseWord: "waiting", correctWord: "waiting",
+      otherTwo: [],
+      correctedSentence: "I need to stop at the chocolate shop on the way home to get a little gift for my girlfriend. Do you mind waiting in the car for five minutes?",
+      explanation: `This sentence is already correct. <span class='right-def'>"Wait"</span> = to stay in place in expectation of something. "Attend" would mean being present at an event — not appropriate for sitting in a car.`
+    },
+    {
+      sentence: "I keep a personal process where I write about my thoughts and daily life.",
+      falseWord: "process", correctWord: "journal",
+      otherTwo: [],
+      correctedSentence: "I keep a personal journal where I write about my thoughts and daily life.",
+      explanation: `<span class='wrong-def'>"Process"</span> = a series of actions or operations leading to an end result. A personal book for writing about your thoughts or daily life is a <span class='right-def'>"journal"</span>.`
+    },
+    {
+      sentence: "My favourite newspaper is the Montreal Gazette.",
+      falseWord: "newspaper", correctWord: "newspaper",
+      otherTwo: [],
+      correctedSentence: "My favourite newspaper is the Montreal Gazette.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Newspaper"</span> = a publication of current events in a community. "Journal" = a collection of scientific articles or a personal diary — not the same.`
+    },
+    {
+      sentence: "I bought a nice souvenir from the market to remember my trip to Paris.",
+      falseWord: "souvenir", correctWord: "souvenir",
+      otherTwo: [],
+      correctedSentence: "I bought a nice souvenir from the market to remember my trip to Paris.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Souvenir"</span> = an object you keep to remember an event. "Memory" = the recollection of an event in your mind — intangible, not bought.`
+    },
+    {
+      sentence: "The sculptor carved a beautiful inscription on the stone memorial.",
+      falseWord: "inscription", correctWord: "inscription",
+      otherTwo: [],
+      correctedSentence: "The sculptor carved a beautiful inscription on the stone memorial.",
+      explanation: `This sentence is already correct. <span class='right-def'>"Inscription"</span> = words engraved on a monument or other object. "Registration" = the event of officially signing up for a course — not suitable here.`
+    },
+    {
+      sentence: "He resigned as soon as he finished university — it was a difficult process for his career.",
+      falseWord: "process", correctWord: "trial",
+      otherTwo: [],
+      correctedSentence: "The accused went through a long trial before the judge made a decision.",
+      explanation: `<span class='wrong-def'>"Process"</span> = a series of actions or operations leading to an end. A formal examination before a competent tribunal is a <span class='right-def'>"trial"</span>.`
+    }
+  ];
+
+  // LEVEL 1 — definition pairs
+  const defPairs1 = [
+    { wordA: "library", defA: "A place to borrow books for free, with a membership card.", wordB: "bookstore", defB: "A place to buy books." },
+    { wordA: "crayon", defA: "Something children colour with; made of wax.", wordB: "pencil", defB: "A writing instrument; contains graphite lead." },
+    { wordA: "phrase", defA: "A group of words that together have a particular meaning — not a complete thought.", wordB: "sentence", defB: "A complete thought, finishing with a period when written." },
+    { wordA: "note", defA: "A written message or record of information; musical symbol.", wordB: "mark", defB: "A number showing the evaluation of school work." },
+    { wordA: "professor", defA: "A faculty member of the highest academic rank at an institution of higher education.", wordB: "teacher", defB: "One whose occupation is to instruct." },
+    { wordA: "conductor", defA: "Someone who drives a train.", wordB: "driver", defB: "Someone who drives a car, bus or taxi." },
+    { wordA: "mechanic", defA: "A person who repairs engines, etc.", wordB: "machinery", defB: "An assemblage of parts that transmit motion and energy." },
+    { wordA: "comedian", defA: "Someone who writes or tells jokes; might perform stand-up.", wordB: "actor", defB: "Someone who portrays a character in a production." },
+    { wordA: "demand (verb)", defA: "To request something in a serious, forceful manner.", wordB: "ask", defB: "To pose a question politely." },
+    { wordA: "command (verb)", defA: "To tell someone officially to do something.", wordB: "order (verb)", defB: "To request food or goods by phone from a business." },
+    { wordA: "cry", defA: "To shed tears, when you are sad.", wordB: "scream", defB: "To raise the volume of your voice." },
+    { wordA: "rest", defA: "Stopping for a moment in order to take a break.", wordB: "stay", defB: "Living in a place." },
+    { wordA: "vacancy", defA: "Empty space in a building or an unfilled position.", wordB: "vacation", defB: "A period spent away from home for travel or recreation." },
+    { wordA: "temperature", defA: "Degree of hotness or coldness measured on a definite scale.", wordB: "weather", defB: "The state of the atmosphere with respect to heat or cold, wetness or dryness, calm or storm." },
+    { wordA: "cave", defA: "A hole in the earth; possible home for bears or bats.", wordB: "basement", defB: "The part of a house that is below ground level." },
+    { wordA: "medicine", defA: "A substance or preparation used in treating disease.", wordB: "doctor", defB: "A person who helps sick people." },
+    { wordA: "photograph", defA: "A picture.", wordB: "photographer", defB: "A person who takes pictures." },
+    { wordA: "furniture", defA: "Items in rooms in a home (couch, chair, table, etc.).", wordB: "supplies", defB: "Provisions; items needed in an office, kitchen, etc." },
+    { wordA: "piece", defA: "The stage representation of an action or story.", wordB: "play", defB: "A part of a whole; a fragment." },
+    { wordA: "infant", defA: "A baby or very young person.", wordB: "child", defB: "A young person; no longer a baby and not yet a teenager." },
+    { wordA: "parent", defA: "Your mother or father only.", wordB: "relative", defB: "Anyone in your family (mother, father, aunt, uncle, etc.)." },
+    { wordA: "figure (noun)", defA: "The shape or form of a person's body.", wordB: "face (noun)", defB: "The part of a person's head including the mouth, nose and eyes." },
+    { wordA: "gentle", defA: "Soft or delicate.", wordB: "nice", defB: "Polite or kind." },
+    { wordA: "sensible", defA: "Having a capacity for good judgment; wise.", wordB: "sensitive", defB: "Emotionally delicate." },
+    { wordA: "fine (adjective)", defA: "Very well; all right.", wordB: "kind (adjective)", defB: "Of a helpful nature." },
+    { wordA: "severe", defA: "Intense; violent.", wordB: "strict", defB: "Rigid; disciplinary." },
+    { wordA: "sympathetic", defA: "Sensitive to other people's emotions.", wordB: "nice", defB: "Pleasing; agreeable." },
+    { wordA: "actually", defA: "In fact.", wordB: "currently", defB: "At this moment; right now." },
+  ];
+
+  // LEVEL 2 — definition pairs
+  const defPairs2 = [
+    { wordA: "inscription", defA: "Words engraved on a monument or other object.", wordB: "registration", defB: "The event of officially signing up for a course, etc." },
+    { wordA: "marriage", defA: "The state of being united to a person in a consensual and contractual relationship recognized by law.", wordB: "wedding", defB: "A ceremony during which two people get married, usually with its accompanying festivities." },
+    { wordA: "engagement", defA: "The moment of an agreement to be married.", wordB: "hiring", defB: "The moment of receiving employment." },
+    { wordA: "stage", defA: "A place in a theatre where actors put on a play.", wordB: "internship", defB: "A practice term in the workforce related to your studies." },
+    { wordA: "formation", defA: "An act of giving form or shape to something.", wordB: "training", defB: "An act of acquiring skill, knowledge or experience." },
+    { wordA: "form (verb)", defA: "To give a particular shape to something.", wordB: "train (verb)", defB: "To give instruction." },
+    { wordA: "enterprise", defA: "A small business that sells goods or services.", wordB: "company", defB: "A large business organisation." },
+    { wordA: "relation", defA: "An interaction, usually between things; impersonal; can qualify a connection as good, bad, strong or weak.", wordB: "relationship", defB: "A connection, usually between people; personal." },
+    { wordA: "process", defA: "A series of actions or operations leading to an end result.", wordB: "trial", defB: "A formal examination before a competent tribunal concerning a civil or criminal issue." },
+    { wordA: "comprehensive", defA: "Inclusive; covering completely; usually refers to things.", wordB: "understanding", defB: "Sympathetic about other people's problems; usually refers to people." },
+    { wordA: "arrive", defA: "To reach a destination.", wordB: "happen", defB: "To take place." },
+    { wordA: "assist", defA: "To help someone with something.", wordB: "attend", defB: "To be present for an event." },
+    { wordA: "resume", defA: "To return to or begin again after interruption.", wordB: "summarise", defB: "To tell something in a short form." },
+    { wordA: "attend", defA: "To be present for an event.", wordB: "wait", defB: "To stay in place in expectation of something." },
+    { wordA: "deception", defA: "The act of deliberately misleading or cheating.", wordB: "disappointment", defB: "The act of failing to meet someone's expectations." },
+    { wordA: "demand (noun)", defA: "An act of asking with strong authority.", wordB: "request (noun)", defB: "The act of asking for something politely." },
+    { wordA: "education", defA: "Methods of teaching and learning in schools.", wordB: "upbringing", defB: "Early training; a particular way of raising a child." },
+    { wordA: "mark", defA: "A teacher's estimate of a student's work.", wordB: "brand", defB: "The original maker of merchandise." },
+    { wordA: "lecture", defA: "A discourse given before an audience or class especially for instruction.", wordB: "reading", defB: "Taking in the sense of letters and symbols using one's eyes." },
+    { wordA: "journal", defA: "A collection of scientific articles or a personal book for writing about your thoughts or daily life.", wordB: "newspaper", defB: "A publication of current events in a community." },
+    { wordA: "souvenir", defA: "An object you keep to remember an event.", wordB: "memory", defB: "The recollection of an event in your mind." },
+    { wordA: "local", defA: "An affiliate or branch of an organization (e.g. a labour union).", wordB: "room", defB: "An area within a building set apart from surrounding space by a wall." },
+    { wordA: "shocked", defA: "Struck with surprise, terror, horror, or disgust.", wordB: "upset", defB: "Emotionally agitated." },
+    { wordA: "journey", defA: "An act of traveling from one very distant place to another.", wordB: "day", defB: "The time of light between one night and the next." },
+    { wordA: "store", defA: "A business establishment where diversified goods are kept for retail sale.", wordB: "blind", defB: "Something on a window to keep light out of a room." },
+  ];
+
+  // ============================================================
+  // STATE
+  // ============================================================
+  let currentMode = 'sentence';
+  let currentLevel = 1; // 1, 2, or 0 = all
+  let currentIndex = -1;
+  let answered = false;
+  let scoreCorrect = 0, scoreWrong = 0, scoreTotal = 0;
+  let usedIndices = [];
+  let defUsedIndices = [];
+  let currentDefIndex = -1;
+  let defAnswered = false;
+
+  function getSentenceItems() {
+    if (currentLevel === 1) return sentenceItems1.filter(i => i.otherTwo.length > 0 || i.falseWord !== i.correctWord);
+    if (currentLevel === 2) return sentenceItems2.filter(i => i.falseWord !== i.correctWord);
+    return [...sentenceItems1.filter(i => i.falseWord !== i.correctWord), ...sentenceItems2.filter(i => i.falseWord !== i.correctWord)];
+  }
+  function getDefPairs() {
+    if (currentLevel === 1) return defPairs1;
+    if (currentLevel === 2) return defPairs2;
+    return [...defPairs1, ...defPairs2];
+  }
+
+  function setLevel(lvl) {
+    currentLevel = lvl;
+    ['tab1','tab2','tabAll'].forEach(id => document.getElementById(id).classList.remove('active'));
+    document.getElementById(lvl === 1 ? 'tab1' : lvl === 2 ? 'tab2' : 'tabAll').classList.add('active');
+    usedIndices = []; defUsedIndices = [];
+    scoreCorrect = 0; scoreWrong = 0; scoreTotal = 0;
+    updateScore();
+    if (currentMode === 'sentence') pickRandomSentence();
+    else pickRandomDef();
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('modeSentence').classList.toggle('active', mode === 'sentence');
+    document.getElementById('modeDefinition').classList.toggle('active', mode === 'definition');
+    document.getElementById('sentenceMode').style.display = mode === 'sentence' ? 'block' : 'none';
+    document.getElementById('defMode').style.display = mode === 'definition' ? 'block' : 'none';
+    usedIndices = []; defUsedIndices = [];
+    if (mode === 'sentence') pickRandomSentence();
+    else pickRandomDef();
+  }
+
+  function updateScore() {
+    document.getElementById("scoreCorrect").textContent = scoreCorrect;
+    document.getElementById("scoreWrong").textContent   = scoreWrong;
+    document.getElementById("scoreTotal").textContent   = scoreTotal;
+    const pool = currentMode === 'sentence' ? getSentenceItems() : getDefPairs();
+    const used = currentMode === 'sentence' ? usedIndices : defUsedIndices;
+    const pct = Math.min(100, Math.round((used.length / pool.length) * 100));
+    document.getElementById("progressFill").style.width = pct + "%";
+  }
+
+  // ====== SENTENCE MODE ======
+  function pickRandomSentence() {
+    const items = getSentenceItems();
+    if (usedIndices.length === items.length) usedIndices = [];
+    let idx;
+    do { idx = Math.floor(Math.random() * items.length); }
+    while (usedIndices.includes(idx));
+    usedIndices.push(idx);
+    currentIndex = idx;
+    answered = false;
+    const item = items[currentIndex];
+    document.getElementById("qNum").textContent = `Question ${usedIndices.length} / ${items.length}`;
+    document.getElementById("sentence").textContent = item.sentence;
+    document.getElementById("userInput").value = "";
+    document.getElementById("userInput").className = "";
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("feedback").className = "";
+    document.getElementById("answerBlock").style.display = "none";
+    document.getElementById("card").classList.add("pop");
+    setTimeout(() => document.getElementById("card").classList.remove("pop"), 300);
+    updateScore();
+  }
+
+  function normalise(str) {
+    return str.trim().toLowerCase().replace(/ed$/, "").replace(/s$/, "");
+  }
+
+  function showSentenceSolution() {
+    const items = getSentenceItems();
+    const item = items[currentIndex];
+    document.getElementById("ansWrong").textContent        = `"${item.falseWord}"`;
+    document.getElementById("correctWord").textContent     = item.correctWord;
+    document.getElementById("ansOk").textContent           = item.otherTwo.length ? item.otherTwo.map(w => `"${w}"`).join("  &  ") : "—";
+    document.getElementById("correctSentence").textContent = item.correctedSentence;
+    document.getElementById("ansExplanation").innerHTML    = item.explanation;
+    document.getElementById("answerBlock").style.display   = "block";
+  }
+
+  function checkAnswer() {
+    if (currentIndex < 0 || answered) return;
+    const items = getSentenceItems();
+    const userRaw  = document.getElementById("userInput").value;
+    const user     = normalise(userRaw);
+    const correct  = normalise(items[currentIndex].correctWord);
+    const feedback = document.getElementById("feedback");
+    const input    = document.getElementById("userInput");
+
+    if (!userRaw.trim()) {
+      feedback.textContent = "✏️ Please type your answer first.";
+      feedback.className = "fb-wrong";
+      return;
     }
 
-    function pickRandomItem() {
-      if (usedIndices.length === items.length) usedIndices = [];
-      let idx;
-      do { idx = Math.floor(Math.random() * items.length); }
-      while (usedIndices.includes(idx));
-      usedIndices.push(idx);
-      currentIndex = idx;
-      answered = false;
-      const item = items[currentIndex];
-      document.getElementById("qNum").textContent = `Question ${usedIndices.length} / ${items.length}`;
-      document.getElementById("sentence").textContent = item.sentence;
-      document.getElementById("userInput").value = "";
-      document.getElementById("userInput").className = "";
-      document.getElementById("feedback").textContent = "";
-      document.getElementById("feedback").className = "";
-      document.getElementById("answerBlock").style.display = "none";
-      document.getElementById("card").classList.add("pop");
-      setTimeout(() => document.getElementById("card").classList.remove("pop"), 300);
-      updateScore();
+    scoreTotal++;
+    answered = true;
+
+    if (user === correct) {
+      scoreCorrect++;
+      feedback.textContent = "✅ Correct! Well done.";
+      feedback.className = "fb-correct";
+      input.classList.add("correct-input");
+      spawnConfetti();
+      showSentenceSolution();
+    } else {
+      scoreWrong++;
+      feedback.textContent = `❌ Not quite. The false cognate was "${items[currentIndex].falseWord}".`;
+      feedback.className = "fb-wrong";
+      input.classList.add("wrong-input");
+      document.getElementById("card").classList.add("shake");
+      setTimeout(() => document.getElementById("card").classList.remove("shake"), 350);
+      showSentenceSolution();
     }
+    updateScore();
+  }
 
-    function normalise(str) {
-      return str.trim().toLowerCase().replace(/ed$/, "").replace(/s$/, "");
-    }
+  // ====== DEFINITION MODE ======
+  function pickRandomDef() {
+    const pairs = getDefPairs();
+    if (defUsedIndices.length === pairs.length) defUsedIndices = [];
+    let idx;
+    do { idx = Math.floor(Math.random() * pairs.length); }
+    while (defUsedIndices.includes(idx));
+    defUsedIndices.push(idx);
+    currentDefIndex = idx;
+    defAnswered = false;
 
-    function showSolution() {
-      const item = items[currentIndex];
-      document.getElementById("ansWrong").textContent        = `"${item.falseWord}"`;
-      document.getElementById("correctWord").textContent     = item.correctWord;
-      document.getElementById("ansOk").textContent           = item.otherTwo.map(w => `"${w}"`).join("  &  ");
-      document.getElementById("correctSentence").textContent = item.correctedSentence;
-      document.getElementById("ansExplanation").innerHTML    = item.explanation;
-      document.getElementById("answerBlock").style.display   = "block";
-    }
+    const pair = pairs[idx];
+    document.getElementById("qNum").textContent = `Question ${defUsedIndices.length} / ${pairs.length}`;
+    document.getElementById("defAnswerBlock").style.display = "none";
+    document.getElementById("defFeedback").textContent = "";
 
-    function checkAnswer() {
-      if (currentIndex < 0 || answered) return;
-      const userRaw  = document.getElementById("userInput").value;
-      const user     = normalise(userRaw);
-      const correct  = normalise(items[currentIndex].correctWord);
-      const feedback = document.getElementById("feedback");
-      const input    = document.getElementById("userInput");
+    // Pick randomly which word to test
+    const testA = Math.random() < 0.5;
+    const testedWord = testA ? pair.wordA : pair.wordB;
+    const testedDef  = testA ? pair.defA  : pair.defB;
+    const otherDef   = testA ? pair.defB  : pair.defA;
+    const otherWord  = testA ? pair.wordB : pair.wordA;
 
-      if (!userRaw.trim()) {
-        feedback.textContent = "✏️ Please type your answer first.";
-        feedback.className = "fb-wrong";
-        return;
-      }
+    document.getElementById("defWord").textContent = testedWord.charAt(0).toUpperCase() + testedWord.slice(1);
+    document.getElementById("defQuestion").textContent = "Which definition fits this word?";
 
-      scoreTotal++;
-      answered = true;
+    // Shuffle choices
+    const choices = [
+      { text: testedDef, correct: true },
+      { text: otherDef, correct: false }
+    ].sort(() => Math.random() - 0.5);
 
-      if (user === correct) {
-        scoreCorrect++;
-        feedback.textContent = "✅ Correct! Well done.";
-        feedback.className = "fb-correct";
-        input.classList.add("correct-input");
-        spawnConfetti();
-        showSolution();
-      } else {
-        scoreWrong++;
-        feedback.textContent = `❌ Not quite. The false cognate was "${items[currentIndex].falseWord}".`;
-        feedback.className = "fb-wrong";
-        input.classList.add("wrong-input");
-        document.getElementById("card").classList.add("shake");
-        setTimeout(() => document.getElementById("card").classList.remove("shake"), 350);
-        showSolution();
-      }
-      updateScore();
-    }
-
-    function spawnConfetti() {
-      const wrapper = document.createElement("div");
-      wrapper.className = "confetti-wrapper";
-      const colors = ["#38bdf8","#818cf8","#34d399","#fbbf24","#f472b6"];
-      for (let i = 0; i < 35; i++) {
-        const p = document.createElement("div");
-        p.className = "confetti-piece";
-        p.style.left = Math.random() * 100 + "vw";
-        p.style.top  = Math.random() * 30 + "vh";
-        p.style.background = colors[Math.floor(Math.random() * colors.length)];
-        p.style.animationDelay = Math.random() * 0.5 + "s";
-        p.style.transform = `rotate(${Math.random()*360}deg)`;
-        wrapper.appendChild(p);
-      }
-      document.body.appendChild(wrapper);
-      setTimeout(() => wrapper.remove(), 1600);
-    }
-
-    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
-    document.getElementById("showBtn").addEventListener("click", () => { answered = true; showSolution(); });
-    document.getElementById("newBtn").addEventListener("click", pickRandomItem);
-    document.getElementById("userInput").addEventListener("keydown", e => {
-      if (e.key === "Enter") checkAnswer();
+    const choicesEl = document.getElementById("defChoices");
+    choicesEl.innerHTML = "";
+    choices.forEach((c, i) => {
+      const btn = document.createElement("button");
+      btn.className = "def-btn";
+      btn.textContent = c.text;
+      btn.onclick = () => handleDefChoice(btn, c.correct, pair, otherWord, testedWord);
+      choicesEl.appendChild(btn);
     });
 
-    pickRandomItem();
+    document.getElementById("card").classList.add("pop");
+    setTimeout(() => document.getElementById("card").classList.remove("pop"), 300);
+    updateScore();
+  }
+
+  function handleDefChoice(btn, isCorrect, pair, otherWord, testedWord) {
+    if (defAnswered) return;
+    defAnswered = true;
+    scoreTotal++;
+
+    const allBtns = document.querySelectorAll(".def-btn");
+    allBtns.forEach(b => { b.disabled = true; });
+
+    if (isCorrect) {
+      scoreCorrect++;
+      btn.classList.add("correct-choice");
+      document.getElementById("defFeedback").textContent = "✅ Correct!";
+      document.getElementById("defFeedback").className = "fb-correct";
+      spawnConfetti();
+    } else {
+      scoreWrong++;
+      btn.classList.add("wrong-choice");
+      // highlight correct
+      allBtns.forEach(b => {
+        if (!b.classList.contains("wrong-choice")) b.classList.add("correct-choice");
+      });
+      document.getElementById("defFeedback").textContent = `❌ Not quite.`;
+      document.getElementById("defFeedback").className = "fb-wrong";
+    }
+
+    // Show pair explanation
+    document.getElementById("defPairExplain").innerHTML =
+      `<div class="pair-def-block"><span class="pair-word">${pair.wordA.charAt(0).toUpperCase() + pair.wordA.slice(1)}</span>: <span class="pair-meaning">${pair.defA}</span></div>
+       <div class="pair-def-block"><span class="pair-word">${pair.wordB.charAt(0).toUpperCase() + pair.wordB.slice(1)}</span>: <span class="pair-meaning">${pair.defB}</span></div>`;
+    document.getElementById("defAnswerBlock").style.display = "block";
+    updateScore();
+  }
+
+  function spawnConfetti() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "confetti-wrapper";
+    const colors = ["#38bdf8","#818cf8","#34d399","#fbbf24","#f472b6"];
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement("div");
+      p.className = "confetti-piece";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.top  = Math.random() * 30 + "vh";
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDelay = Math.random() * 0.5 + "s";
+      p.style.transform = `rotate(${Math.random()*360}deg)`;
+      wrapper.appendChild(p);
+    }
+    document.body.appendChild(wrapper);
+    setTimeout(() => wrapper.remove(), 1600);
+  }
+
+  // ====== EVENT LISTENERS ======
+  document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+  document.getElementById("showBtn").addEventListener("click", () => { answered = true; showSentenceSolution(); });
+  document.getElementById("newBtn").addEventListener("click", pickRandomSentence);
+  document.getElementById("defNextBtn").addEventListener("click", pickRandomDef);
+  document.getElementById("userInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") checkAnswer();
+  });
+
+  // Init
+  pickRandomSentence();
   </script>
 </body>
 </html>
